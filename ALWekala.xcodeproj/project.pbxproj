@@ -1,0 +1,600 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0455641A217C631D006B953D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04556419217C631D006B953D /* AppDelegate.swift */; };
+		0455641C217C631D006B953D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455641B217C631D006B953D /* ViewController.swift */; };
+		0455641F217C631D006B953D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0455641D217C631D006B953D /* Main.storyboard */; };
+		04556422217C631E006B953D /* ALWekala.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 04556420217C631E006B953D /* ALWekala.xcdatamodeld */; };
+		04556424217C632B006B953D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04556423217C632B006B953D /* Assets.xcassets */; };
+		04556427217C632B006B953D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04556425217C632B006B953D /* LaunchScreen.storyboard */; };
+		04556432217C632B006B953D /* ALWekalaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04556431217C632B006B953D /* ALWekalaTests.swift */; };
+		0455643D217C632B006B953D /* ALWekalaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455643C217C632B006B953D /* ALWekalaUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0455642E217C632B006B953D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0455640E217C631D006B953D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04556415217C631D006B953D;
+			remoteInfo = ALWekala;
+		};
+		04556439217C632B006B953D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0455640E217C631D006B953D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04556415217C631D006B953D;
+			remoteInfo = ALWekala;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		04556416217C631D006B953D /* ALWekala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ALWekala.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04556419217C631D006B953D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0455641B217C631D006B953D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0455641E217C631D006B953D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		04556421217C631E006B953D /* ALWekala.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ALWekala.xcdatamodel; sourceTree = "<group>"; };
+		04556423217C632B006B953D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		04556426217C632B006B953D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		04556428217C632B006B953D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0455642D217C632B006B953D /* ALWekalaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ALWekalaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		04556431217C632B006B953D /* ALWekalaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALWekalaTests.swift; sourceTree = "<group>"; };
+		04556433217C632B006B953D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04556438217C632B006B953D /* ALWekalaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ALWekalaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0455643C217C632B006B953D /* ALWekalaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALWekalaUITests.swift; sourceTree = "<group>"; };
+		0455643E217C632B006B953D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		04556413217C631D006B953D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0455642A217C632B006B953D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04556435217C632B006B953D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0455640D217C631D006B953D = {
+			isa = PBXGroup;
+			children = (
+				04556418217C631D006B953D /* ALWekala */,
+				04556430217C632B006B953D /* ALWekalaTests */,
+				0455643B217C632B006B953D /* ALWekalaUITests */,
+				04556417217C631D006B953D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		04556417217C631D006B953D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04556416217C631D006B953D /* ALWekala.app */,
+				0455642D217C632B006B953D /* ALWekalaTests.xctest */,
+				04556438217C632B006B953D /* ALWekalaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		04556418217C631D006B953D /* ALWekala */ = {
+			isa = PBXGroup;
+			children = (
+				04556419217C631D006B953D /* AppDelegate.swift */,
+				0455641B217C631D006B953D /* ViewController.swift */,
+				0455641D217C631D006B953D /* Main.storyboard */,
+				04556423217C632B006B953D /* Assets.xcassets */,
+				04556425217C632B006B953D /* LaunchScreen.storyboard */,
+				04556428217C632B006B953D /* Info.plist */,
+				04556420217C631E006B953D /* ALWekala.xcdatamodeld */,
+			);
+			path = ALWekala;
+			sourceTree = "<group>";
+		};
+		04556430217C632B006B953D /* ALWekalaTests */ = {
+			isa = PBXGroup;
+			children = (
+				04556431217C632B006B953D /* ALWekalaTests.swift */,
+				04556433217C632B006B953D /* Info.plist */,
+			);
+			path = ALWekalaTests;
+			sourceTree = "<group>";
+		};
+		0455643B217C632B006B953D /* ALWekalaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0455643C217C632B006B953D /* ALWekalaUITests.swift */,
+				0455643E217C632B006B953D /* Info.plist */,
+			);
+			path = ALWekalaUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		04556415217C631D006B953D /* ALWekala */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04556441217C632B006B953D /* Build configuration list for PBXNativeTarget "ALWekala" */;
+			buildPhases = (
+				04556412217C631D006B953D /* Sources */,
+				04556413217C631D006B953D /* Frameworks */,
+				04556414217C631D006B953D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ALWekala;
+			productName = ALWekala;
+			productReference = 04556416217C631D006B953D /* ALWekala.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0455642C217C632B006B953D /* ALWekalaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04556444217C632B006B953D /* Build configuration list for PBXNativeTarget "ALWekalaTests" */;
+			buildPhases = (
+				04556429217C632B006B953D /* Sources */,
+				0455642A217C632B006B953D /* Frameworks */,
+				0455642B217C632B006B953D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0455642F217C632B006B953D /* PBXTargetDependency */,
+			);
+			name = ALWekalaTests;
+			productName = ALWekalaTests;
+			productReference = 0455642D217C632B006B953D /* ALWekalaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		04556437217C632B006B953D /* ALWekalaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04556447217C632B006B953D /* Build configuration list for PBXNativeTarget "ALWekalaUITests" */;
+			buildPhases = (
+				04556434217C632B006B953D /* Sources */,
+				04556435217C632B006B953D /* Frameworks */,
+				04556436217C632B006B953D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0455643A217C632B006B953D /* PBXTargetDependency */,
+			);
+			name = ALWekalaUITests;
+			productName = ALWekalaUITests;
+			productReference = 04556438217C632B006B953D /* ALWekalaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0455640E217C631D006B953D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = pencil;
+				TargetAttributes = {
+					04556415217C631D006B953D = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					0455642C217C632B006B953D = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = 04556415217C631D006B953D;
+					};
+					04556437217C632B006B953D = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = 04556415217C631D006B953D;
+					};
+				};
+			};
+			buildConfigurationList = 04556411217C631D006B953D /* Build configuration list for PBXProject "ALWekala" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0455640D217C631D006B953D;
+			productRefGroup = 04556417217C631D006B953D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				04556415217C631D006B953D /* ALWekala */,
+				0455642C217C632B006B953D /* ALWekalaTests */,
+				04556437217C632B006B953D /* ALWekalaUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		04556414217C631D006B953D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04556427217C632B006B953D /* LaunchScreen.storyboard in Resources */,
+				04556424217C632B006B953D /* Assets.xcassets in Resources */,
+				0455641F217C631D006B953D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0455642B217C632B006B953D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04556436217C632B006B953D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		04556412217C631D006B953D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0455641C217C631D006B953D /* ViewController.swift in Sources */,
+				04556422217C631E006B953D /* ALWekala.xcdatamodeld in Sources */,
+				0455641A217C631D006B953D /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04556429217C632B006B953D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04556432217C632B006B953D /* ALWekalaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04556434217C632B006B953D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0455643D217C632B006B953D /* ALWekalaUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0455642F217C632B006B953D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04556415217C631D006B953D /* ALWekala */;
+			targetProxy = 0455642E217C632B006B953D /* PBXContainerItemProxy */;
+		};
+		0455643A217C632B006B953D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04556415217C631D006B953D /* ALWekala */;
+			targetProxy = 04556439217C632B006B953D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0455641D217C631D006B953D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0455641E217C631D006B953D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		04556425217C632B006B953D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04556426217C632B006B953D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0455643F217C632B006B953D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		04556440217C632B006B953D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		04556442217C632B006B953D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ALWekala/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = pencil.ALWekala;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		04556443217C632B006B953D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ALWekala/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = pencil.ALWekala;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		04556445217C632B006B953D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ALWekalaTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = pencil.ALWekalaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ALWekala.app/ALWekala";
+			};
+			name = Debug;
+		};
+		04556446217C632B006B953D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ALWekalaTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = pencil.ALWekalaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ALWekala.app/ALWekala";
+			};
+			name = Release;
+		};
+		04556448217C632B006B953D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ALWekalaUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = pencil.ALWekalaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ALWekala;
+			};
+			name = Debug;
+		};
+		04556449217C632B006B953D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ALWekalaUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = pencil.ALWekalaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ALWekala;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		04556411217C631D006B953D /* Build configuration list for PBXProject "ALWekala" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0455643F217C632B006B953D /* Debug */,
+				04556440217C632B006B953D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04556441217C632B006B953D /* Build configuration list for PBXNativeTarget "ALWekala" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04556442217C632B006B953D /* Debug */,
+				04556443217C632B006B953D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04556444217C632B006B953D /* Build configuration list for PBXNativeTarget "ALWekalaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04556445217C632B006B953D /* Debug */,
+				04556446217C632B006B953D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04556447217C632B006B953D /* Build configuration list for PBXNativeTarget "ALWekalaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04556448217C632B006B953D /* Debug */,
+				04556449217C632B006B953D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		04556420217C631E006B953D /* ALWekala.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				04556421217C631E006B953D /* ALWekala.xcdatamodel */,
+			);
+			currentVersion = 04556421217C631E006B953D /* ALWekala.xcdatamodel */;
+			path = ALWekala.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 0455640E217C631D006B953D /* Project object */;
+}
