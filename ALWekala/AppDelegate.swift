@@ -8,18 +8,82 @@
 
 import UIKit
 import CoreData
-
+import Firebase
+import FBSDKCoreKit
+import GoogleMaps
+import GooglePlaces
+import GoogleSignIn
+import FBSDKLoginKit
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate ,GIDSignInDelegate{
 
     var window: UIWindow?
-
+   static var userMenu_bool = true
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+     //
+        GMSServices.provideAPIKey("AIzaSyDG6OfRLYA05qEQz-Wnoey523EXMLEdUJg")
+        GMSPlacesClient.provideAPIKey("AIzaSyDG6OfRLYA05qEQz-Wnoey523EXMLEdUJg")
         // Override point for customization after application launch.
+        FirebaseApp.configure()
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
+         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }
-
+    @available(iOS 9.0, *)    // 9 or above
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let facebookDidHandle = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        
+        let googleDidHandle = GIDSignIn.sharedInstance().handle(url,
+                                                                sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                                                annotation: [:])
+        
+        return googleDidHandle || facebookDidHandle
+    }
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            
+            return
+        }
+        
+        guard let authentication = user.authentication else { return }
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
+                                                       accessToken: authentication.accessToken)
+        Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
+            if let error = error {
+                print("failed to create a firbase user with google account",error)
+                return
+            }
+            guard let uid = user?.userID else {return}
+            // User is signed in
+            if user.profile.hasImage
+            {
+                
+                let pic = user.profile.imageURL(withDimension: 100)
+                let imageDataDict:[String: Any] = ["image": pic! ,"name": user.profile.name!,"email": user.profile.email,"id":uid]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "putName"), object: nil, userInfo: imageDataDict)
+                
+                print(pic)
+            }
+            
+            print("successfully logged into firbase with google",user?.userID)
+            
+            
+            
+            let idToken = user.authentication.idToken
+            //            let mainStoryboardIpad : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            //            let initialViewControlleripad : UIViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
+            //            self.window = UIWindow(frame: UIScreen.main.bounds)
+            //            self.window?.rootViewController = initialViewControlleripad
+            //            self.window?.makeKeyAndVisible()
+        }
+        
+    }
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        // Perform any operations when the user disconnects from app here.
+        // ...
+    }
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -46,6 +110,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data stack
 
+    @available(iOS 10.0, *)
+    @available(iOS 10.0, *)
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
@@ -76,17 +142,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Core Data Saving support
 
     func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        if #available(iOS 10.0, *) {
+            let context = persistentContainer.viewContext
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    let nserror = error as NSError
+                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                }
             }
+        } else {
+            // Fallback on earlier versions
         }
+       
     }
 
 }

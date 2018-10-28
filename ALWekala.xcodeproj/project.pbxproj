@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0410354A217F23D70003589E /* CartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04103549217F23D70003589E /* CartTableViewCell.swift */; };
+		0410354C217F65500003589E /* TimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0410354B217F65500003589E /* TimeViewController.swift */; };
+		04130FA621807589004B55D4 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04130FA521807589004B55D4 /* LocationViewController.swift */; };
+		04130FA8218080DA004B55D4 /* cartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04130FA7218080DA004B55D4 /* cartData.swift */; };
+		04130FAA21809BE3004B55D4 /* ConfirmedOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04130FA921809BE3004B55D4 /* ConfirmedOrderViewController.swift */; };
+		04130FAC21809D25004B55D4 /* BillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04130FAB21809D25004B55D4 /* BillTableViewCell.swift */; };
+		0435AA3E217DB12600C8D915 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435AA3C217DB12600C8D915 /* SearchResultsController.swift */; };
+		0435AA3F217DB12600C8D915 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435AA3D217DB12600C8D915 /* Network.swift */; };
+		0435AA41217DB24A00C8D915 /* AnotherMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435AA40217DB24A00C8D915 /* AnotherMapViewController.swift */; };
+		0435AA43217DC0BA00C8D915 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0435AA42217DC0BA00C8D915 /* GoogleService-Info.plist */; };
+		0435AA45217DE89B00C8D915 /* MakeOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435AA44217DE89B00C8D915 /* MakeOrderViewController.swift */; };
+		0435AA47217E0B1500C8D915 /* VegetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435AA46217E0B1400C8D915 /* VegetableViewController.swift */; };
+		0435AA49217E0B2700C8D915 /* FruitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435AA48217E0B2700C8D915 /* FruitViewController.swift */; };
+		0435AA4C217E11A500C8D915 /* VegetableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435AA4B217E11A500C8D915 /* VegetableCollectionViewCell.swift */; };
+		0435AA4E217E16CF00C8D915 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435AA4D217E16CF00C8D915 /* Food.swift */; };
 		0455641A217C631D006B953D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04556419217C631D006B953D /* AppDelegate.swift */; };
 		0455641C217C631D006B953D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455641B217C631D006B953D /* ViewController.swift */; };
 		0455641F217C631D006B953D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0455641D217C631D006B953D /* Main.storyboard */; };
@@ -15,6 +30,29 @@
 		04556427217C632B006B953D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04556425217C632B006B953D /* LaunchScreen.storyboard */; };
 		04556432217C632B006B953D /* ALWekalaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04556431217C632B006B953D /* ALWekalaTests.swift */; };
 		0455643D217C632B006B953D /* ALWekalaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455643C217C632B006B953D /* ALWekalaUITests.swift */; };
+		0455644B217C6428006B953D /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455644A217C6427006B953D /* SplashViewController.swift */; };
+		04556453217C6DE6006B953D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455644F217C6DE6006B953D /* RootViewController.swift */; };
+		04556454217C6DE6006B953D /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04556450217C6DE6006B953D /* IntroViewController.swift */; };
+		04556455217C6DE6006B953D /* Intro1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04556451217C6DE6006B953D /* Intro1ViewController.swift */; };
+		04556457217C6EEA006B953D /* Intro3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04556456217C6EEA006B953D /* Intro3ViewController.swift */; };
+		0455645B217C9E99006B953D /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455645A217C9E99006B953D /* Constant.swift */; };
+		0455645E217CB3D7006B953D /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455645D217CB3D7006B953D /* Person.swift */; };
+		04556460217CBFF5006B953D /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455645F217CBFF5006B953D /* SignUpViewController.swift */; };
+		04556465217CCAE6006B953D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04556467217CCAE6006B953D /* Localizable.strings */; };
+		0455646D217CCE5B006B953D /* RegionBean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455646C217CCE5B006B953D /* RegionBean.swift */; };
+		0458A6E92181BA1100570A88 /* ResultOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458A6E82181BA1100570A88 /* ResultOrderViewController.swift */; };
+		0458A6EB2181D05200570A88 /* storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458A6EA2181D05200570A88 /* storage.swift */; };
+		0458A6F021820A7800570A88 /* UserMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458A6EE21820A7700570A88 /* UserMenuViewController.swift */; };
+		0458A6F221820CE700570A88 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458A6F121820CE700570A88 /* MenuTableViewCell.swift */; };
+		0458A6F421820F4200570A88 /* UserLeftMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458A6F321820F4200570A88 /* UserLeftMenuVC.swift */; };
+		0458A6F62182145F00570A88 /* MyOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458A6F52182145F00570A88 /* MyOrderViewController.swift */; };
+		04FB31DC21859BAB00B63E95 /* MyorderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB31DB21859BAA00B63E95 /* MyorderTableViewCell.swift */; };
+		04FB31DE21859BB600B63E95 /* myorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB31DD21859BB600B63E95 /* myorder.swift */; };
+		04FB31E02185BB6D00B63E95 /* MyOrderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB31DF2185BB6D00B63E95 /* MyOrderDetailViewController.swift */; };
+		04FB31E22185D39700B63E95 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB31E12185D39700B63E95 /* MyProfileViewController.swift */; };
+		3DFDC354F3127F1C038DCC26 /* Pods_ALWekalaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46FE18AEC1FCC2DACAEADE5E /* Pods_ALWekalaTests.framework */; };
+		3ED039463EE343756CFF78C7 /* Pods_ALWekalaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A03BB3B9B1E7453A6E112E /* Pods_ALWekalaUITests.framework */; };
+		E75F3FAD8293E71598B6E7E0 /* Pods_ALWekala.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482C64FC55E21862FFBFF4A1 /* Pods_ALWekala.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +73,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04103549217F23D70003589E /* CartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartTableViewCell.swift; sourceTree = "<group>"; };
+		0410354B217F65500003589E /* TimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeViewController.swift; sourceTree = "<group>"; };
+		04130FA521807589004B55D4 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		04130FA7218080DA004B55D4 /* cartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cartData.swift; sourceTree = "<group>"; };
+		04130FA921809BE3004B55D4 /* ConfirmedOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmedOrderViewController.swift; sourceTree = "<group>"; };
+		04130FAB21809D25004B55D4 /* BillTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillTableViewCell.swift; sourceTree = "<group>"; };
+		0435AA3C217DB12600C8D915 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
+		0435AA3D217DB12600C8D915 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		0435AA40217DB24A00C8D915 /* AnotherMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnotherMapViewController.swift; sourceTree = "<group>"; };
+		0435AA42217DC0BA00C8D915 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0435AA44217DE89B00C8D915 /* MakeOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeOrderViewController.swift; sourceTree = "<group>"; };
+		0435AA46217E0B1400C8D915 /* VegetableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VegetableViewController.swift; sourceTree = "<group>"; };
+		0435AA48217E0B2700C8D915 /* FruitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitViewController.swift; sourceTree = "<group>"; };
+		0435AA4B217E11A500C8D915 /* VegetableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VegetableCollectionViewCell.swift; sourceTree = "<group>"; };
+		0435AA4D217E16CF00C8D915 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		04556416217C631D006B953D /* ALWekala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ALWekala.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04556419217C631D006B953D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0455641B217C631D006B953D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +102,38 @@
 		04556438217C632B006B953D /* ALWekalaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ALWekalaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0455643C217C632B006B953D /* ALWekalaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALWekalaUITests.swift; sourceTree = "<group>"; };
 		0455643E217C632B006B953D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0455644A217C6427006B953D /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		0455644F217C6DE6006B953D /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		04556450217C6DE6006B953D /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		04556451217C6DE6006B953D /* Intro1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intro1ViewController.swift; sourceTree = "<group>"; };
+		04556456217C6EEA006B953D /* Intro3ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Intro3ViewController.swift; sourceTree = "<group>"; };
+		0455645A217C9E99006B953D /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		0455645D217CB3D7006B953D /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		0455645F217CBFF5006B953D /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		04556468217CCAEA006B953D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		04556469217CCB8B006B953D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
+		0455646A217CCB8B006B953D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		0455646B217CCB8C006B953D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0455646C217CCE5B006B953D /* RegionBean.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionBean.swift; sourceTree = "<group>"; };
+		0458A6E82181BA1100570A88 /* ResultOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultOrderViewController.swift; sourceTree = "<group>"; };
+		0458A6EA2181D05200570A88 /* storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = storage.swift; sourceTree = "<group>"; };
+		0458A6EE21820A7700570A88 /* UserMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMenuViewController.swift; sourceTree = "<group>"; };
+		0458A6F121820CE700570A88 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		0458A6F321820F4200570A88 /* UserLeftMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLeftMenuVC.swift; sourceTree = "<group>"; };
+		0458A6F52182145F00570A88 /* MyOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderViewController.swift; sourceTree = "<group>"; };
+		04FB31DB21859BAA00B63E95 /* MyorderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyorderTableViewCell.swift; sourceTree = "<group>"; };
+		04FB31DD21859BB600B63E95 /* myorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myorder.swift; sourceTree = "<group>"; };
+		04FB31DF2185BB6D00B63E95 /* MyOrderDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderDetailViewController.swift; sourceTree = "<group>"; };
+		04FB31E12185D39700B63E95 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
+		0C65F1CE8249A9BAA0E40C70 /* Pods-ALWekala.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALWekala.release.xcconfig"; path = "Pods/Target Support Files/Pods-ALWekala/Pods-ALWekala.release.xcconfig"; sourceTree = "<group>"; };
+		187E23CC803F7A2AAE18BEEB /* Pods-ALWekalaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALWekalaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ALWekalaTests/Pods-ALWekalaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		46FE18AEC1FCC2DACAEADE5E /* Pods_ALWekalaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ALWekalaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		482C64FC55E21862FFBFF4A1 /* Pods_ALWekala.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ALWekala.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		521C95D0B2645322C31FC070 /* Pods-ALWekalaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALWekalaUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ALWekalaUITests/Pods-ALWekalaUITests.release.xcconfig"; sourceTree = "<group>"; };
+		690C19A6ED4B1DD718F33ED1 /* Pods-ALWekala.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALWekala.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ALWekala/Pods-ALWekala.debug.xcconfig"; sourceTree = "<group>"; };
+		A9A03BB3B9B1E7453A6E112E /* Pods_ALWekalaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ALWekalaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9D0244227A70D7EC5FB59EB /* Pods-ALWekalaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALWekalaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ALWekalaTests/Pods-ALWekalaTests.release.xcconfig"; sourceTree = "<group>"; };
+		DF564FAC0C5FB3E8A5A00E69 /* Pods-ALWekalaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALWekalaUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ALWekalaUITests/Pods-ALWekalaUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E75F3FAD8293E71598B6E7E0 /* Pods_ALWekala.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DFDC354F3127F1C038DCC26 /* Pods_ALWekalaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,19 +157,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ED039463EE343756CFF78C7 /* Pods_ALWekalaUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0435AA4A217E118000C8D915 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				04FB31DB21859BAA00B63E95 /* MyorderTableViewCell.swift */,
+				0458A6F121820CE700570A88 /* MenuTableViewCell.swift */,
+				0435AA4B217E11A500C8D915 /* VegetableCollectionViewCell.swift */,
+				04103549217F23D70003589E /* CartTableViewCell.swift */,
+				04130FAB21809D25004B55D4 /* BillTableViewCell.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		0455640D217C631D006B953D = {
 			isa = PBXGroup;
 			children = (
+				04556467217CCAE6006B953D /* Localizable.strings */,
 				04556418217C631D006B953D /* ALWekala */,
 				04556430217C632B006B953D /* ALWekalaTests */,
 				0455643B217C632B006B953D /* ALWekalaUITests */,
 				04556417217C631D006B953D /* Products */,
+				CA4F4F28624D0DB88D81C9B8 /* Pods */,
+				E59924819A8D05D848BCED10 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +202,16 @@
 		04556418217C631D006B953D /* ALWekala */ = {
 			isa = PBXGroup;
 			children = (
+				0458A6EC2181FFE000570A88 /* menu */,
+				0458A6EA2181D05200570A88 /* storage.swift */,
+				0435AA4A217E118000C8D915 /* view */,
+				0435AA40217DB24A00C8D915 /* AnotherMapViewController.swift */,
+				0435AA3D217DB12600C8D915 /* Network.swift */,
+				0435AA3C217DB12600C8D915 /* SearchResultsController.swift */,
+				0435AA42217DC0BA00C8D915 /* GoogleService-Info.plist */,
+				0455645C217CB36E006B953D /* Model */,
+				0455644D217C6DA8006B953D /* slider */,
+				0455644A217C6427006B953D /* SplashViewController.swift */,
 				04556419217C631D006B953D /* AppDelegate.swift */,
 				0455641B217C631D006B953D /* ViewController.swift */,
 				0455641D217C631D006B953D /* Main.storyboard */,
@@ -106,6 +219,18 @@
 				04556425217C632B006B953D /* LaunchScreen.storyboard */,
 				04556428217C632B006B953D /* Info.plist */,
 				04556420217C631E006B953D /* ALWekala.xcdatamodeld */,
+				0455645A217C9E99006B953D /* Constant.swift */,
+				0455645F217CBFF5006B953D /* SignUpViewController.swift */,
+				0435AA44217DE89B00C8D915 /* MakeOrderViewController.swift */,
+				0435AA46217E0B1400C8D915 /* VegetableViewController.swift */,
+				0435AA48217E0B2700C8D915 /* FruitViewController.swift */,
+				0410354B217F65500003589E /* TimeViewController.swift */,
+				04130FA521807589004B55D4 /* LocationViewController.swift */,
+				04130FA921809BE3004B55D4 /* ConfirmedOrderViewController.swift */,
+				0458A6E82181BA1100570A88 /* ResultOrderViewController.swift */,
+				0458A6F52182145F00570A88 /* MyOrderViewController.swift */,
+				04FB31DF2185BB6D00B63E95 /* MyOrderDetailViewController.swift */,
+				04FB31E12185D39700B63E95 /* MyProfileViewController.swift */,
 			);
 			path = ALWekala;
 			sourceTree = "<group>";
@@ -128,6 +253,61 @@
 			path = ALWekalaUITests;
 			sourceTree = "<group>";
 		};
+		0455644D217C6DA8006B953D /* slider */ = {
+			isa = PBXGroup;
+			children = (
+				04556456217C6EEA006B953D /* Intro3ViewController.swift */,
+				04556451217C6DE6006B953D /* Intro1ViewController.swift */,
+				04556450217C6DE6006B953D /* IntroViewController.swift */,
+				0455644F217C6DE6006B953D /* RootViewController.swift */,
+			);
+			path = slider;
+			sourceTree = "<group>";
+		};
+		0455645C217CB36E006B953D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04FB31DD21859BB600B63E95 /* myorder.swift */,
+				0455646C217CCE5B006B953D /* RegionBean.swift */,
+				0455645D217CB3D7006B953D /* Person.swift */,
+				0435AA4D217E16CF00C8D915 /* Food.swift */,
+				04130FA7218080DA004B55D4 /* cartData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0458A6EC2181FFE000570A88 /* menu */ = {
+			isa = PBXGroup;
+			children = (
+				0458A6F321820F4200570A88 /* UserLeftMenuVC.swift */,
+				0458A6EE21820A7700570A88 /* UserMenuViewController.swift */,
+			);
+			path = menu;
+			sourceTree = "<group>";
+		};
+		CA4F4F28624D0DB88D81C9B8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				690C19A6ED4B1DD718F33ED1 /* Pods-ALWekala.debug.xcconfig */,
+				0C65F1CE8249A9BAA0E40C70 /* Pods-ALWekala.release.xcconfig */,
+				187E23CC803F7A2AAE18BEEB /* Pods-ALWekalaTests.debug.xcconfig */,
+				A9D0244227A70D7EC5FB59EB /* Pods-ALWekalaTests.release.xcconfig */,
+				DF564FAC0C5FB3E8A5A00E69 /* Pods-ALWekalaUITests.debug.xcconfig */,
+				521C95D0B2645322C31FC070 /* Pods-ALWekalaUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E59924819A8D05D848BCED10 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				482C64FC55E21862FFBFF4A1 /* Pods_ALWekala.framework */,
+				46FE18AEC1FCC2DACAEADE5E /* Pods_ALWekalaTests.framework */,
+				A9A03BB3B9B1E7453A6E112E /* Pods_ALWekalaUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +315,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04556441217C632B006B953D /* Build configuration list for PBXNativeTarget "ALWekala" */;
 			buildPhases = (
+				5E25BE14587D214954A7DB3B /* [CP] Check Pods Manifest.lock */,
 				04556412217C631D006B953D /* Sources */,
 				04556413217C631D006B953D /* Frameworks */,
 				04556414217C631D006B953D /* Resources */,
+				2187CB3224ACA8AC361DCE3B /* [CP] Embed Pods Frameworks */,
+				82C98E6B66DB27859B96F715 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -152,6 +335,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04556444217C632B006B953D /* Build configuration list for PBXNativeTarget "ALWekalaTests" */;
 			buildPhases = (
+				8BD8E9234C9497F74182279C /* [CP] Check Pods Manifest.lock */,
 				04556429217C632B006B953D /* Sources */,
 				0455642A217C632B006B953D /* Frameworks */,
 				0455642B217C632B006B953D /* Resources */,
@@ -170,6 +354,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04556447217C632B006B953D /* Build configuration list for PBXNativeTarget "ALWekalaUITests" */;
 			buildPhases = (
+				297AB6889C70053A3DAFAA06 /* [CP] Check Pods Manifest.lock */,
 				04556434217C632B006B953D /* Sources */,
 				04556435217C632B006B953D /* Frameworks */,
 				04556436217C632B006B953D /* Resources */,
@@ -214,6 +399,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
 			);
 			mainGroup = 0455640D217C631D006B953D;
 			productRefGroup = 04556417217C631D006B953D /* Products */;
@@ -232,7 +418,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04556465217CCAE6006B953D /* Localizable.strings in Resources */,
 				04556427217C632B006B953D /* LaunchScreen.storyboard in Resources */,
+				0435AA43217DC0BA00C8D915 /* GoogleService-Info.plist in Resources */,
 				04556424217C632B006B953D /* Assets.xcassets in Resources */,
 				0455641F217C631D006B953D /* Main.storyboard in Resources */,
 			);
@@ -254,14 +442,164 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2187CB3224ACA8AC361DCE3B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ALWekala/Pods-ALWekala-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyStarRatingView/SwiftyStarRatingView.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyStarRatingView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ALWekala/Pods-ALWekala-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		297AB6889C70053A3DAFAA06 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ALWekalaUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E25BE14587D214954A7DB3B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ALWekala-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		82C98E6B66DB27859B96F715 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ALWekala/Pods-ALWekala-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ALWekala/Pods-ALWekala-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8BD8E9234C9497F74182279C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ALWekalaTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		04556412217C631D006B953D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0410354A217F23D70003589E /* CartTableViewCell.swift in Sources */,
+				0435AA41217DB24A00C8D915 /* AnotherMapViewController.swift in Sources */,
+				04FB31DE21859BB600B63E95 /* myorder.swift in Sources */,
+				04130FAC21809D25004B55D4 /* BillTableViewCell.swift in Sources */,
+				0435AA45217DE89B00C8D915 /* MakeOrderViewController.swift in Sources */,
+				04556460217CBFF5006B953D /* SignUpViewController.swift in Sources */,
+				04130FAA21809BE3004B55D4 /* ConfirmedOrderViewController.swift in Sources */,
+				0435AA47217E0B1500C8D915 /* VegetableViewController.swift in Sources */,
+				0458A6F421820F4200570A88 /* UserLeftMenuVC.swift in Sources */,
+				04FB31DC21859BAB00B63E95 /* MyorderTableViewCell.swift in Sources */,
+				0410354C217F65500003589E /* TimeViewController.swift in Sources */,
+				0455645E217CB3D7006B953D /* Person.swift in Sources */,
 				0455641C217C631D006B953D /* ViewController.swift in Sources */,
+				04556455217C6DE6006B953D /* Intro1ViewController.swift in Sources */,
+				0458A6E92181BA1100570A88 /* ResultOrderViewController.swift in Sources */,
+				0455645B217C9E99006B953D /* Constant.swift in Sources */,
+				0455646D217CCE5B006B953D /* RegionBean.swift in Sources */,
+				0458A6F221820CE700570A88 /* MenuTableViewCell.swift in Sources */,
+				04556454217C6DE6006B953D /* IntroViewController.swift in Sources */,
+				04130FA621807589004B55D4 /* LocationViewController.swift in Sources */,
+				04130FA8218080DA004B55D4 /* cartData.swift in Sources */,
+				04556457217C6EEA006B953D /* Intro3ViewController.swift in Sources */,
+				0435AA4C217E11A500C8D915 /* VegetableCollectionViewCell.swift in Sources */,
+				0435AA49217E0B2700C8D915 /* FruitViewController.swift in Sources */,
+				04556453217C6DE6006B953D /* RootViewController.swift in Sources */,
+				0458A6F62182145F00570A88 /* MyOrderViewController.swift in Sources */,
+				0458A6EB2181D05200570A88 /* storage.swift in Sources */,
+				04FB31E02185BB6D00B63E95 /* MyOrderDetailViewController.swift in Sources */,
 				04556422217C631E006B953D /* ALWekala.xcdatamodeld in Sources */,
+				0458A6F021820A7800570A88 /* UserMenuViewController.swift in Sources */,
+				04FB31E22185D39700B63E95 /* MyProfileViewController.swift in Sources */,
 				0455641A217C631D006B953D /* AppDelegate.swift in Sources */,
+				0435AA3E217DB12600C8D915 /* SearchResultsController.swift in Sources */,
+				0435AA4E217E16CF00C8D915 /* Food.swift in Sources */,
+				0435AA3F217DB12600C8D915 /* Network.swift in Sources */,
+				0455644B217C6428006B953D /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +639,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				0455641E217C631D006B953D /* Base */,
+				04556469217CCB8B006B953D /* ar */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -309,8 +648,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				04556426217C632B006B953D /* Base */,
+				0455646A217CCB8B006B953D /* ar */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		04556467217CCAE6006B953D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04556468217CCAEA006B953D /* en */,
+				0455646B217CCB8C006B953D /* ar */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -320,6 +669,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -380,6 +730,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -432,10 +783,12 @@
 		};
 		04556442217C632B006B953D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 690C19A6ED4B1DD718F33ED1 /* Pods-ALWekala.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ALWekala/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -449,10 +802,12 @@
 		};
 		04556443217C632B006B953D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0C65F1CE8249A9BAA0E40C70 /* Pods-ALWekala.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = ALWekala/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -466,6 +821,7 @@
 		};
 		04556445217C632B006B953D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 187E23CC803F7A2AAE18BEEB /* Pods-ALWekalaTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -486,6 +842,7 @@
 		};
 		04556446217C632B006B953D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9D0244227A70D7EC5FB59EB /* Pods-ALWekalaTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -506,6 +863,7 @@
 		};
 		04556448217C632B006B953D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF564FAC0C5FB3E8A5A00E69 /* Pods-ALWekalaUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -525,6 +883,7 @@
 		};
 		04556449217C632B006B953D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 521C95D0B2645322C31FC070 /* Pods-ALWekalaUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

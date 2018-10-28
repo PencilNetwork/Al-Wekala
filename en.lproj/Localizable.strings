@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  ALWekala
+
+  Created by Mac on 10/21/18.
+  Copyright © 2018 pencil. All rights reserved.
+*/
+vegetable = "Vegetables";
+fruits = "Fruits";
+dayDelivery = "Day Delivery";
+nightDelivery = "Night Delivery";
+addtoCart = "Add to cart" ;
+added = "Added";
+marketPrice = "market Price:";
+wekalaPrice = "Wekala price:";
+timeMorning = "12:03 pm";
+timenight = "06:09 pm";
+yourCart = "Your Cart" ;
+checkout = "CheckOut" ;

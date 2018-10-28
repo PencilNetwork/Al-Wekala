@@ -1,0 +1,60 @@
+
+/* Class = "UIButton"; normalTitle = "Log in  Facebook"; ObjectID = "4f8-dq-RZO"; */
+"4f8-dq-RZO.normalTitle" = "Log in  Facebook";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "6g7-nu-vd4"; */
+"6g7-nu-vd4.normalTitle" = "Continue";
+
+/* Class = "UIButton"; normalTitle = "English"; ObjectID = "7jE-UB-Viy"; */
+"7jE-UB-Viy.normalTitle" = "English";
+
+/* Class = "UIButton"; normalTitle = "Go TO Home"; ObjectID = "AXN-U2-mTY"; */
+"AXN-U2-mTY.normalTitle" = "Go TO Home";
+
+/* Class = "UITextField"; placeholder = "Name"; ObjectID = "FBC-3g-KPG"; */
+"FBC-3g-KPG.placeholder" = "Name";
+
+/* Class = "UIButton"; normalTitle = "Region"; ObjectID = "H5J-9L-Iyb"; */
+"H5J-9L-Iyb.normalTitle" = "Region";
+
+/* Class = "UITextField"; placeholder = "LandScape.."; ObjectID = "LX6-43-V2d"; */
+"LX6-43-V2d.placeholder" = "LandScape..";
+
+/* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "Q7A-nC-SPD"; */
+"Q7A-nC-SPD.normalTitle" = "Skip";
+
+/* Class = "UIButton"; normalTitle = "Arabic"; ObjectID = "QYQ-ZH-piu"; */
+"QYQ-ZH-piu.normalTitle" = "Arabic";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "TjH-Ag-AxI"; */
+"TjH-Ag-AxI.normalTitle" = "Next";
+
+/* Class = "UIButton"; normalTitle = "Log in Google"; ObjectID = "WGf-6R-GkY"; */
+"WGf-6R-GkY.normalTitle" = "Log in Google";
+
+/* Class = "UITextField"; placeholder = "Alexandria"; ObjectID = "XF4-11-szw"; */
+"XF4-11-szw.placeholder" = "Alexandria";
+
+/* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "bCN-4F-Odd"; */
+"bCN-4F-Odd.normalTitle" = "Skip";
+
+/* Class = "UIButton"; normalTitle = "Language"; ObjectID = "evu-Xp-3YA"; */
+"evu-Xp-3YA.normalTitle" = "Language";
+
+/* Class = "UIButton"; normalTitle = "Set Your Location"; ObjectID = "faa-jt-CKr"; */
+"faa-jt-CKr.normalTitle" = "Set Your Location";
+
+/* Class = "UITextField"; placeholder = "Flat Number"; ObjectID = "izN-5m-yoS"; */
+"izN-5m-yoS.placeholder" = "Flat Number";
+
+/* Class = "UIButton"; normalTitle = "Confirm"; ObjectID = "lni-3C-fdP"; */
+"lni-3C-fdP.normalTitle" = "Confirm";
+
+/* Class = "UITextField"; placeholder = "Mobile Number"; ObjectID = "nWf-E3-C7c"; */
+"nWf-E3-C7c.placeholder" = "Mobile Number";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "vMq-xW-8TZ"; */
+"vMq-xW-8TZ.normalTitle" = "Next";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "zIJ-rt-VJv"; */
+"zIJ-rt-VJv.text" = "Label";
