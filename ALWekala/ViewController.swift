@@ -31,8 +31,10 @@ class ViewController: UIViewController ,GIDSignInUIDelegate{
     var email:String?
     var name:String?
     var id:String?
+    var flag = false
     override func viewDidLoad() {
         super.viewDidLoad()
+       
          GIDSignIn.sharedInstance().uiDelegate = self
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
@@ -40,13 +42,31 @@ class ViewController: UIViewController ,GIDSignInUIDelegate{
         facebookBtn.layer.cornerRadius = 10
         googleBtn.layer.cornerRadius = 10
          UserDefaults.standard.set("en", forKey: "lang")
+        
         UserDefaults.standard.set(false,forKey: "logout")
         
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
+        let lang =  UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar"{
+            
+        }else{
+            contentView.semanticContentAttribute = .forceLeftToRight
+        }
+//        if flag == true {
+//            self.continueBtn.isHidden = true
+//            self.profileImg.isHidden = true
+//            self.cartImg.isHidden = false
+//            self.googleBtn.isHidden = false
+//            self.facebookBtn.isHidden = false
+//            self.lineView.isHidden = true
+//            self.nameView.isHidden = true
+//            self.languageBtn.isHidden = false
+//            self.downArrow.isHidden = false
+//            flag = false
+//        }
         self.navigationController?.isNavigationBarHidden = true
     }
     

@@ -24,19 +24,23 @@ class FruitViewController: UIViewController ,ItemDelegate{
      let appdelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIView.appearance().semanticContentAttribute = .forceLeftToRight
         fruitCollectionView.delegate = self
         fruitCollectionView.dataSource = self
+       // fruitCollectionView.semanticContentAttribute = .forceLeftToRight
          let lang =  UserDefaults.standard.value(forKey: "lang") as! String
         if lang == "ar"{
           //  fruitCollectionView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
            //fruitCollectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
-//            containerView.semanticContentAttribute = .forceRightToLeft
+           
+        }else{
+            
         }
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
         if networkExist == true {
-          getData()
+        getData()
             
         }else{
             if lang == "ar" {
@@ -54,7 +58,7 @@ class FruitViewController: UIViewController ,ItemDelegate{
         NotificationCenter.default.addObserver(self, selector: #selector(updateCart(_:)), name: NSNotification.Name(rawValue: "updatecartfruites"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(deleteFromcart(_:)), name: NSNotification.Name(rawValue: "deleteCartfruites"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateLang(_:)), name: NSNotification.Name(rawValue: "refreshLang"), object: nil)
-         NotificationCenter.default.addObserver(self, selector: #selector(sendFruit(_:)), name: NSNotification.Name(rawValue: "sendFruit"), object: nil)
+       // NotificationCenter.default.addObserver(self, selector: #selector(sendFruit(_:)), name: NSNotification.Name(rawValue: "sendFruit"), object: nil)
         // Do any additional setup after loading the view.
     }
    
@@ -103,8 +107,10 @@ class FruitViewController: UIViewController ,ItemDelegate{
                     }
                     self.fruitList.append(fruitItem)
                 }
-                self.fetchFromDatabase()
+                fruitCollectionView.reloadData()
             }
+            
+          //  self.fetchFromDatabase()
         }
     }
     func fetchFromDatabase(){
@@ -180,7 +186,13 @@ class FruitViewController: UIViewController ,ItemDelegate{
     
     @objc func updateLang(_ notification: NSNotification){
         fruitList = []
-        let lang =  UserDefaults.standard.value(forKey: "lang") as! String
+         let lang =  UserDefaults.standard.value(forKey: "lang") as! String
+         if lang == "ar" {
+          //   UIView.appearance().semanticContentAttribute = .forceRightToLeft
+         }else{
+           // UIView.appearance().semanticContentAttribute = .forceLeftToRight
+        }
+       
         let network = Network()
         let networkExist = network.isConnectedToNetwork()
         
@@ -241,9 +253,12 @@ class FruitViewController: UIViewController ,ItemDelegate{
         fruitCollectionView.reloadData()
     }
     func addToCart(index:Int,added:Bool){
-        fruitList[index].added = added
-        fruitCollectionView.reloadData()
-         sendCardDelegate?.sendItemToCart(Item: fruitList[index], flag: added)
+        if fruitList[index].quantity > 0{
+            fruitList[index].added = added
+            fruitCollectionView.reloadData()
+            sendCardDelegate?.sendItemToCart(Item: fruitList[index], flag: added)
+        }
+       
     }
     func getData(){
       
@@ -322,6 +337,7 @@ extension FruitViewController : UICollectionViewDelegate,UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VegetableCollectionViewCell", for: indexPath) as! VegetableCollectionViewCell
+       // cell.contentView.isUserInteractionEnabled = true
           cell.index = indexPath.row
           cell.added = fruitList[indexPath.row].added
         let lang = UserDefaults.standard.value(forKey: "lang") as! String
@@ -344,6 +360,24 @@ extension FruitViewController : UICollectionViewDelegate,UICollectionViewDataSou
             cell.marketPriceLBL.textAlignment = .right
             cell.nameLBL.textAlignment = .right
         }else{
+       
+            cell.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            cell.wekalaPriceLBL.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            
+            cell.wekalaPriceTxt.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.wekalaPriceTxt.textAlignment = .left
+            cell.marketPrice.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.marketPriceLBL.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.addToCard.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.termLbl.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.quantity.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.nameLBL.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            cell.marketPriceLBL.textAlignment = .left
+            cell.nameLBL.textAlignment = .left
+            
             cell.wekalaPriceLBL.text = "wekalaPrice".localized(lang: "en")
             cell.marketPrice.text = "marketPrice".localized(lang: "en")
         }

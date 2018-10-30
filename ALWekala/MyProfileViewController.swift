@@ -9,6 +9,9 @@
 import UIKit
 import Alamofire
 class MyProfileViewController: UIViewController ,MapDelegate{
+    
+  //  @IBOutlet weak var regiointry: UILabel!
+    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var alexandria: UITextField!
@@ -33,6 +36,7 @@ class MyProfileViewController: UIViewController ,MapDelegate{
     var address:String?
     var up = false
     var locationFlag = false
+    var regionMap = ""
       let lang = UserDefaults.standard.value(forKey: "lang") as! String
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,8 +146,23 @@ class MyProfileViewController: UIViewController ,MapDelegate{
             let networkExist = network.isConnectedToNetwork()
             
             if networkExist == true {
+//                 if regionSelected != -1 {
+////                    if regionMap != "" {
+////                        if  regionMap.range(of:regionList[regionSelected].name! , options: .caseInsensitive) != nil {
+////                            print("\(regionList[regionSelected].name!) ////  \(regionMap) ")
+////                        sendData()
+////                       }else{ // not equal
+////                            print("\(regionList[regionSelected].name!) ////  \(regionMap) ")
+////                        let alert = UIAlertController(title: "Warning", message: "You should change regoin to \(regionMap)", preferredStyle: UIAlertControllerStyle.alert)
+////                        alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+////                        self.present(alert, animated: true, completion: nil)
+////                      }
+//                    }else{
+//                        sendData()
+//                    }
+//                 }else{
                sendData()
-                
+//                }
             }else{
                 
                 let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
@@ -310,11 +329,13 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         
         return validFlag
     }
-    func createMap(lat:Double,long:Double,Address:String){
+    func createMap(lat:Double,long:Double,Address:String,region:String){
         self.lat = lat
         self.long = long
         self.address = Address
         self.addressLBL.text = self.address
+        self.regionMap = region
+       // regiointry.text = region
     }
     func getRegion(){
         activityIndicator.isHidden = false

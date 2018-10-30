@@ -14,7 +14,7 @@ class Myorder {
     var reasone:String?
     var address:String?
     var regoin:String?
-    var delevery_fees :String?
+    var delevery_fees :Double?
     var total:Double?
     var langitude:Double?
     var latitude:Double?

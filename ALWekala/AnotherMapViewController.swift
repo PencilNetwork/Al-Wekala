@@ -11,7 +11,7 @@ import GoogleMaps
 import GooglePlaces
 import CoreLocation
 protocol MapDelegate{
-    func createMap(lat:Double,long:Double,Address:String)
+    func createMap(lat:Double,long:Double,Address:String,region:String)
 }
 class AnotherMapViewController: UIViewController,UISearchBarDelegate,LocateOnTheMap ,CLLocationManagerDelegate ,GMSMapViewDelegate{
     func locateWithLongitude(_ lon: Double, andLatitude lat: Double, andTitle title: String) {
@@ -28,6 +28,7 @@ class AnotherMapViewController: UIViewController,UISearchBarDelegate,LocateOnThe
             marker.map = self.googleMapsView
             self.googleMapsView.selectedMarker = marker
             self.address = title
+            self.getAddressFromLatLonWithOutMarker(pdblLatitude: lat, withLongitude: lon)
             
         }
     }
@@ -46,7 +47,7 @@ class AnotherMapViewController: UIViewController,UISearchBarDelegate,LocateOnThe
     var resultPlaceID = [String]()
     var mapDelegate:MapDelegate?
      let locationBtn = UIButton()
-   
+    var region = ""
 //    var searchCoordination:[coordination] = []
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,7 +160,7 @@ class AnotherMapViewController: UIViewController,UISearchBarDelegate,LocateOnThe
     
     @IBAction func confirmAction(_ sender: Any) {
        
-        mapDelegate?.createMap(lat: lat!, long: long!,Address: address!)
+        mapDelegate?.createMap(lat: lat!, long: long!,Address: address!,region: region)
         self.navigationController?.popViewController(animated: false)
     }
     
@@ -171,15 +172,146 @@ class AnotherMapViewController: UIViewController,UISearchBarDelegate,LocateOnThe
         let lon: Double = pdblLongitude
         //72.833770
         let ceo: CLGeocoder = CLGeocoder()
+        
+        ceo.accessibilityLanguage = "fr"
         center.latitude = lat
         center.longitude = lon
         
         let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
         
         var addressString : String = ""
-        ceo.reverseGeocodeLocation(loc, completionHandler:
-            {(placemarks, error) in
-                
+        if #available(iOS 11.0, *) {
+            ceo.reverseGeocodeLocation(loc,preferredLocale: Locale.init(identifier: "ar"), completionHandler:
+                {(placemarks, error) in
+                    
+                    if (error != nil)
+                    {
+                        print("reverse geodcode fail: \(error!.localizedDescription)")
+                    }else { // success
+                        let pm = placemarks! as [CLPlacemark]
+                        
+                        if pm.count > 0 {
+                            let pm = placemarks![0]
+                            print(pm.country)
+                            if let region = pm.locality, !region.isEmpty {
+                                // here you have the city name
+                                // assign city name to our iVar
+                                print("region\(region)")
+                                self.region  = region
+                            }
+                            if pm.subLocality != nil {
+                                addressString = addressString + pm.subLocality! + ", "
+                            }
+                            if pm.thoroughfare != nil {
+                                addressString = addressString + pm.thoroughfare! + ", "
+                            }
+                            if pm.locality != nil {
+                                addressString = addressString + pm.locality! + ", "
+                            }
+                            if pm.country != nil {
+                                addressString = addressString + pm.country! + ", "
+                            }
+                            if pm.postalCode != nil {
+                                addressString = addressString + pm.postalCode! + " "
+                            }
+                            
+                            self.address = addressString
+                            print(addressString)
+                            
+                            marker.title =  addressString
+                            marker.snippet = addressString
+                        }
+                    }
+            })
+        } else {
+            // Fallback on earlier versions
+            ceo.reverseGeocodeLocation(loc, completionHandler:
+                {(placemarks, error) in
+                    
+                    if (error != nil)
+                    {
+                        print("reverse geodcode fail: \(error!.localizedDescription)")
+                    }else { // success
+                        let pm = placemarks! as [CLPlacemark]
+                        
+                        if pm.count > 0 {
+                            let pm = placemarks![0]
+                            print(pm.country)
+                            if let region = pm.locality, !region.isEmpty {
+                                // here you have the city name
+                                // assign city name to our iVar
+                                print("region\(region)")
+                                self.region  = region
+                            }
+                            if pm.subLocality != nil {
+                                addressString = addressString + pm.subLocality! + ", "
+                            }
+                            if pm.thoroughfare != nil {
+                                addressString = addressString + pm.thoroughfare! + ", "
+                            }
+                            if pm.locality != nil {
+                                addressString = addressString + pm.locality! + ", "
+                            }
+                            if pm.country != nil {
+                                addressString = addressString + pm.country! + ", "
+                            }
+                            if pm.postalCode != nil {
+                                addressString = addressString + pm.postalCode! + " "
+                            }
+                            
+                            self.address = addressString
+                            print(addressString)
+                            
+                            marker.title =  addressString
+                            marker.snippet = addressString
+                        }
+                    }
+            })
+        }
+        
+    }
+    func getAddressFromLatLonWithOutMarker(pdblLatitude: Double, withLongitude pdblLongitude: Double) {
+        
+        var center : CLLocationCoordinate2D = CLLocationCoordinate2D()
+        let lat: Double = pdblLatitude
+        //21.228124
+        let lon: Double = pdblLongitude
+        //72.833770
+        let ceo: CLGeocoder = CLGeocoder()
+        
+        center.latitude = lat
+        center.longitude = lon
+        
+        let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
+        if #available(iOS 11.0, *) {
+            ceo.reverseGeocodeLocation(loc,preferredLocale: Locale.init(identifier: "ar"), completionHandler:
+                {(placemarks, error) in
+                    
+                    if (error != nil)
+                    {
+                        print("reverse geodcode fail: \(error!.localizedDescription)")
+                    }else { // success
+                        let pm = placemarks! as [CLPlacemark]
+                        
+                        if pm.count > 0 {
+                            let pm = placemarks![0]
+                            if let region = pm.locality, !region.isEmpty {
+                                // here you have the city name
+                                // assign city name to our iVar
+                                print("region\(region)")
+                                self.region  = region
+                            }
+                            
+                        }
+                    }
+            })
+        } else {
+            // Fallback on earlier versions
+            UserDefaults.standard.set(["ar"], forKey: "AppleLanguages")
+            
+            CLGeocoder().reverseGeocodeLocation(loc) { placemarks, error in
+                // Remove the language override
+                UserDefaults.standard.removeObject(forKey: "AppleLanguages")
                 if (error != nil)
                 {
                     print("reverse geodcode fail: \(error!.localizedDescription)")
@@ -188,44 +320,25 @@ class AnotherMapViewController: UIViewController,UISearchBarDelegate,LocateOnThe
                     
                     if pm.count > 0 {
                         let pm = placemarks![0]
-                        print(pm.country)
-                        print(pm.locality)
-                        
-                        print(pm.subLocality)
-                        print(pm.thoroughfare)
-                        print(pm.postalCode)
-                        print(pm.subThoroughfare)
-                        
-                        if pm.subLocality != nil {
-                            addressString = addressString + pm.subLocality! + ", "
-                        }
-                        if pm.thoroughfare != nil {
-                            addressString = addressString + pm.thoroughfare! + ", "
-                        }
-                        if pm.locality != nil {
-                            addressString = addressString + pm.locality! + ", "
-                        }
-                        if pm.country != nil {
-                            addressString = addressString + pm.country! + ", "
-                        }
-                        if pm.postalCode != nil {
-                            addressString = addressString + pm.postalCode! + " "
+                        if let region = pm.locality, !region.isEmpty {
+                            // here you have the city name
+                            // assign city name to our iVar
+                            print("region\(region)")
+                            self.region  = region
                         }
                         
-                        self.address = addressString
-                        print(addressString)
-                        
-                        marker.title =  addressString
-                        marker.snippet = addressString
                     }
                 }
-        })
+                // ...
+            }
+        }
         
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         lat = locValue.latitude
         long = locValue.longitude
+        
             googleMapsView.clear()
         let camera = GMSCameraPosition.camera(withLatitude: lat!, longitude: long!, zoom: 16.0)
         

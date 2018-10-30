@@ -18,6 +18,7 @@ class VegetableViewController: UIViewController,ItemDelegate {
     let appdelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
+         UIView.appearance().semanticContentAttribute = .forceLeftToRight
         vegCollectionView.delegate = self
         vegCollectionView.dataSource = self
         let lang =  UserDefaults.standard.value(forKey: "lang") as! String
@@ -28,7 +29,7 @@ class VegetableViewController: UIViewController,ItemDelegate {
         let networkExist = network.isConnectedToNetwork()
         
         if networkExist == true {
-            getData()
+           getData()
             
         }else{
             if lang == "ar" {

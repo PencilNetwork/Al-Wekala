@@ -37,6 +37,7 @@ class TimeViewController: UIViewController {
          let time = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
+        formatter.locale = NSLocale.init(localeIdentifier: "en") as Locale
         let timeStr = formatter.string(from: time)
         print("timeNow\(timeStr)")
         print("tommorripowIs \(Date().tomorrow)")

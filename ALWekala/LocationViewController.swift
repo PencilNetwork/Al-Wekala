@@ -31,7 +31,7 @@ class LocationViewController: UIViewController ,MapDelegate{
     //MARK:variable
     var regionList:[RegionBean] = []
     var regionSelected = -1
-    var defaultFlag = false
+    var defaultFlag = true
     var addressFlag = false
     var locationFlag = false
     var lat = 0.0
@@ -41,6 +41,7 @@ class LocationViewController: UIViewController ,MapDelegate{
       let lang = UserDefaults.standard.value(forKey: "lang") as! String
     override func viewDidLoad() {
         super.viewDidLoad()
+         defaultCheckBox.setImage(UIImage(named: "radioGreen.png"), for: .normal)
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         hideKeyboardWhenTappedAround()
@@ -143,6 +144,9 @@ class LocationViewController: UIViewController ,MapDelegate{
                             if let name = item["name"] as? String{
                                 region.name = name
                             }
+                            if let fees = item["fees"] as? Double{
+                                region.deliveryfees = fees
+                            }
                             self.regionList.append(region)
                         }
                         self.regionPickerView.dataSource = self
@@ -158,7 +162,7 @@ class LocationViewController: UIViewController ,MapDelegate{
                 }
         }
     }
-    func createMap(lat:Double,long:Double,Address:String){
+    func createMap(lat:Double,long:Double,Address:String,region:String){
         self.lat = lat
         self.long = long
         self.address = Address
@@ -265,6 +269,11 @@ class LocationViewController: UIViewController ,MapDelegate{
                     cartData?.longitude = (person?.langitude)!
                     cartData?.region = (person?.regoin)!
                     cartData?.beside = (person?.besides)!
+                    for item in regionList {
+                        if item.name  == cartData?.region! {
+                            cartData?.deliveryfees = item.deliveryfees!
+                        }
+                    }
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "ConfirmedOrderViewController") as! ConfirmedOrderViewController
                     vc.cartData = cartData
                     self.navigationController?.pushViewController(vc, animated: true)
@@ -275,6 +284,7 @@ class LocationViewController: UIViewController ,MapDelegate{
                cartData?.address  = address!
                 cartData?.flatNumber = flatNumberTxt.text!
               cartData?.region = regionList[regionSelected].name!
+                    cartData?.deliveryfees = regionList[regionSelected].deliveryfees!
                 cartData?.longitude = "\(long)"
                  cartData?.latitude =  "\(lat)"
                 cartData?.beside = landscapeTxt.text!

@@ -37,6 +37,8 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     @IBOutlet weak var vegView: UIView!
     @IBOutlet weak var languageBtn: UIButton!
     
+    @IBOutlet weak var MiddleView: UIView!
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var totalLbl: UILabel!
    var refresh = false 
     var cartList :[Food] = []
@@ -46,6 +48,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     var menu_vc:UserMenuViewController!
     var tab = 0
     var fruitList :[Food] = []
+      var DictionaryFruit :[String: Any]?
     override func viewDidLoad() {
         super.viewDidLoad()
         bottomView.layer.borderWidth = 0.5
@@ -61,6 +64,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         tableView.delegate = self
         tableView.dataSource = self
         self.tableView.separatorStyle = .none
+      //  fruitView.semanticContentAttribute = .forceLeftToRight
         let lang = UserDefaults.standard.value(forKey: "lang") as! String
         if lang == "ar" {
             segmentControl.setTitle("vegetable".localized(lang: "ar"), forSegmentAt: 0)
@@ -73,6 +77,18 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             yourCartLBL.text = "yourCart".localized(lang: "ar")
             bottomView.semanticContentAttribute = .forceRightToLeft
            tableView.semanticContentAttribute = .forceRightToLeft
+            MiddleView.semanticContentAttribute = .forceRightToLeft
+         //   topView.semanticContentAttribute = .forceRightToLeft
+       //     languageBtn.contentHorizontalAlignment = .right
+        //     langView.semanticContentAttribute = .forceRightToLeft
+          
+        }else{
+            MiddleView.semanticContentAttribute = .forceLeftToRight
+            //topView.semanticContentAttribute = .forceLeftToRight
+            bottomView.semanticContentAttribute = .forceLeftToRight
+            tableView.semanticContentAttribute = .forceLeftToRight
+            // languageBtn.contentHorizontalAlignment = .left
+           // langView.semanticContentAttribute = .forceLeftToRight
         }
        
         if lang == "ar" {
@@ -87,13 +103,16 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
         if refresh == true {
             refreshItem()
             //zeroItemFruit
              let lang = UserDefaults.standard.value(forKey: "lang") as! String
             if lang == "ar" {
+                
                 totalLbl.text = "مجموع:\(0)"
             }else{
+               
                 totalLbl.text = "total:\(0)"
             }
              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "zeroItemFruit"), object: nil, userInfo: nil)
@@ -107,6 +126,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     //MARK:functionDelegate
     func plusToCart(index:Int){
         cartList[index].quantity = cartList[index].quantity + 1
@@ -179,7 +199,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         }else{
             totalLbl.text = "total:\(sum)"
         }
-        
+       // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "sendFruit"), object: nil, userInfo: DictionaryFruit!)
     }
     func deleteFromCart(index:Int){
          removeFromDatabase(id:cartList[index].id!)
@@ -212,7 +232,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         
     }
     func getData(){
-        
+        foodList = []
        
         let lang =  UserDefaults.standard.value(forKey: "lang") as! String
         var parameter :[String:AnyObject] = [String:AnyObject]()
@@ -292,9 +312,10 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
                                 var fruitDict :[String:Any] = ["id": item.id! ,"name": item.name!,"market_price":item.marketPrice!,"wekal_price": item.wekalaPrice!,"unit":item.unit!,"packing_fees":item.packingFees!,"category":item.category!,"image":item.image]
                                 fruitDataDict.append(fruitDict)
                             }
+                            self.DictionaryFruit  = ["fruit": fruitDataDict]
                             self.sendFood()
-                            var DictionaryFruit :[String: Any] = ["fruit": fruitDataDict]
-                       //   NotificationCenter.default.post(name: NSNotification.Name(rawValue: "sendFruit"), object: nil, userInfo: DictionaryFruit)
+                            
+                         
                             
                             // self.fruitCollectionView.reloadData()
                         }
@@ -504,12 +525,19 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             let VegetableViewController = segue.destination as! VegetableViewController
             VegetableViewController.sendCardDelegate = self
         }
+        if segue.identifier == "myOrder"{
+            let myorder =    segue.destination as! MyOrderViewController
+            myorder.parentView = self.view
+        }
     }
  
     @IBAction func arabicBtnAction(_ sender: Any) {
-        cartList = []
-           foodList = [] 
-     
+      //  cartList = []
+       //    foodList = []
+        MiddleView.semanticContentAttribute = .forceRightToLeft
+     //   topView.semanticContentAttribute = .forceRightToLeft
+     //   languageBtn.contentHorizontalAlignment = .right
+       //  langView.semanticContentAttribute = .forceLeftToRight
          langView.isHidden = true
          UserDefaults.standard.set("ar", forKey: "lang")
         segmentControl.setTitle("vegetable".localized(lang: "ar"), forSegmentAt: 0)
@@ -535,9 +563,12 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         }
     }
     @IBAction func englishBtnAction(_ sender: Any) {
-        cartList = []
-        foodList = []
-       
+     //   cartList = []
+      //  foodList = []
+        MiddleView.semanticContentAttribute = .forceLeftToRight
+    //    topView.semanticContentAttribute = .forceLeftToRight
+        bottomView.semanticContentAttribute = .forceLeftToRight
+  //      langView.semanticContentAttribute = .forceLeftToRight
          langView.isHidden = true
          UserDefaults.standard.set("en", forKey: "lang")
         segmentControl.setTitle("vegetable".localized(lang: "en"), forSegmentAt: 0)
@@ -581,12 +612,24 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     @IBAction func checkOutBtnAction(_ sender: Any) {
         var cartData = CartData()
           cartData.cartList = cartList
+        if cartList.count > 0 {
         let popupVC = self.storyboard?.instantiateViewController(withIdentifier: "TimeViewController") as! TimeViewController
         popupVC.cartData = cartData
         self.addChildViewController(popupVC)
         popupVC.view.frame = self.view.frame
         self.view.addSubview(popupVC.view)
-        
+        }else{
+            let lang = UserDefaults.standard.value(forKey: "lang") as! String
+            if lang == "ar" {
+            let alert = UIAlertController(title: "", message: "اضف الي السلة" , preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            }else{
+                let alert = UIAlertController(title: "", message: "Add to cart" , preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
 }
 extension MakeOrderViewController : UITableViewDelegate,UITableViewDataSource{

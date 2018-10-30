@@ -87,8 +87,8 @@ class ConfirmedOrderViewController: UIViewController {
         }
         totalPrice.text = "\(sum) L.E"
          packingFeesPrice.text = "\(totalPack) L.E"
-        deliveryFeesPrice.text = "10L.E"
-         stotalprice = sum + totalPack + 10.0  // total price
+        deliveryFeesPrice.text = "\((cartData?.deliveryfees)!) " + "L.E"
+         stotalprice = sum + totalPack + (cartData?.deliveryfees)!  // total price
         subTotalPrice.text = "\(stotalprice) L.E"
         // Do any additional setup after loading the view.
     }
@@ -145,7 +145,7 @@ class ConfirmedOrderViewController: UIViewController {
             cardItems.append(cart)
         }
         parameter["items"] = cardItems as AnyObject?
-        parameter["delevery_fees"] = "10" as AnyObject?
+        parameter["delevery_fees"] = (cartData?.deliveryfees)! as AnyObject?
         parameter["total_packing_fees"] = totalPack as AnyObject?
         parameter["total"] = stotalprice as AnyObject?
         parameter["type"] = (cartData?.day)! as AnyObject?

@@ -200,7 +200,7 @@ class SignUpViewController: UIViewController,MapDelegate {
         }
         return validFlag
     }
-    func createMap(lat:Double,long:Double,Address:String){
+   func createMap(lat:Double,long:Double,Address:String,region:String){
         self.lat = lat
         self.long = long
         self.address = Address

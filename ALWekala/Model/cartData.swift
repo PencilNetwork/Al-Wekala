@@ -17,5 +17,5 @@ class CartData{
     var time :String?
     var day:Int?
     var beside:String?
-    
+    var deliveryfees:Double?
 }

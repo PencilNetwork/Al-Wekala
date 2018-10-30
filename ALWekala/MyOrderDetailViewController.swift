@@ -33,11 +33,16 @@ class MyOrderDetailViewController: UIViewController {
     var  stotalprice = 0.0
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+            self.foodTableView.separatorStyle = .none
+        self.view.backgroundColor = UIColor(white: 0, alpha: 0.4)
+        containerView.layer.borderWidth = 0.5
         foodTableView.dataSource = self
         foodTableView.delegate = self
         tableHeight.constant = CGFloat((item?.item.count)! * 60)
         containerHeight.constant =  tableHeight.constant + 250
+        if (containerHeight.constant + 71) > viewHeight.constant {
+            viewHeight.constant  = containerHeight.constant + 71
+        }
         if lang == "ar" {
             itemLbl.text = "item".localized(lang: "ar")
             quantityLbl.text = "quantity".localized(lang: "ar")
@@ -77,8 +82,8 @@ class MyOrderDetailViewController: UIViewController {
         }
         totalPrice.text = "\(sum) L.E"
         packingFeesPrice.text = "\(totalPack) L.E"
-        deliveryFeesPrice.text = "10L.E"
-        stotalprice = sum + totalPack + 10.0  // total price
+        deliveryFeesPrice.text = "\((item?.delevery_fees)!)"
+        stotalprice = sum + totalPack + (item?.delevery_fees)!  // total price
         subTotalPrice.text = "\(stotalprice) L.E"
     }
 
@@ -88,7 +93,10 @@ class MyOrderDetailViewController: UIViewController {
     }
     
 
-  
+    @IBAction func backBtnAction(_ sender: Any) {
+        self.dismiss(animated: false, completion: nil)
+    }
+    
 
 }
 extension MyOrderDetailViewController :UITableViewDelegate,UITableViewDataSource{

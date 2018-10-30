@@ -64,10 +64,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,GIDSignInDelegate{
                 let imageDataDict:[String: Any] = ["image": pic! ,"name": user.profile.name!,"email": user.profile.email,"id":uid]
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "putName"), object: nil, userInfo: imageDataDict)
                 
-                print(pic)
+           //     print(pic)
             }
             
-            print("successfully logged into firbase with google",user?.userID)
+          //  print("successfully logged into firbase with google",user?.userID)
             
             
             

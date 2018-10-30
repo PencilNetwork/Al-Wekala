@@ -13,6 +13,7 @@ class MyOrderViewController: UIViewController {
     
     var orderList :[Myorder] = []
     let lang = UserDefaults.standard.value(forKey: "lang") as! String
+    var parentView:UIView?
     override func viewDidLoad() {
         super.viewDidLoad()
             NotificationCenter.default.addObserver(self, selector: #selector(myOrder(_:)), name: NSNotification.Name(rawValue: "MyOrder"), object: nil)
@@ -96,7 +97,7 @@ class MyOrderViewController: UIViewController {
                                 myorder.regoin = regoin
                             }
                             if let delevery_fees = item["delevery_fees"] as? Double {
-                                myorder.delevery_fees = "\(delevery_fees)"
+                                myorder.delevery_fees = delevery_fees
                             }
                             if let total = item["total"] as? Double {
                                 myorder.total = total
@@ -123,7 +124,7 @@ class MyOrderViewController: UIViewController {
                                         veg.id = id
                                     }
                                    
-                                    if let quantity = element["Quantity"] as? Int {
+                                    if let quantity = element["quantatiy"] as? Int {
                                         veg.quantity = quantity
                                     }else{
                                         veg.quantity = 0 
@@ -180,11 +181,26 @@ extension MyOrderViewController :UITableViewDelegate,UITableViewDataSource {
         return orderList.count
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let popupVC = self.storyboard?.instantiateViewController(withIdentifier: "MyOrderDetailViewController") as! MyOrderDetailViewController
-        popupVC.item = orderList[indexPath.row]
-        self.addChildViewController(popupVC)
-        popupVC.view.frame = self.view.frame
-        self.view.addSubview(popupVC.view)
+             self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+//        let popupVC = self.storyboard?.instantiateViewController(withIdentifier: "MyOrderDetailViewController") as! MyOrderDetailViewController
+//        popupVC.item = orderList[indexPath.row]
+//        self.addChildViewController(popupVC)
+//        popupVC.view.frame = (parentView?.frame)!
+//      //  popupVC.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+//        self.view.addSubview(popupVC.view)
+        let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "MyOrderDetailViewController") as! MyOrderDetailViewController
+        customAlert.item = orderList[indexPath.row]
+        customAlert.providesPresentationContextTransitionStyle = true
+        customAlert.definesPresentationContext = true
+        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+
+        self.present(customAlert, animated: true, completion: nil)
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier:"MyOrderDetailViewController") as! MyOrderDetailViewController
+//        vc.item = orderList[indexPath.row]
+//        vc.modalPresentationStyle = .overFullScreen
+//        vc.modalTransitionStyle = .crossDissolve
+//        self.present(vc, animated: true, completion: nil)
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyorderTableViewCell", for: indexPath) as! MyorderTableViewCell
