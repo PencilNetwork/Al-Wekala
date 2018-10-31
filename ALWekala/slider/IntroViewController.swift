@@ -33,6 +33,7 @@ class IntroViewController: UIViewController {
         let newViewController = storyBoard.instantiateViewController(withIdentifier: "FirstNavigationController")
         
         self.present(newViewController, animated: false, completion: nil)
+       // self.present(newViewController, animated: false, completion: nil)
     }
     
 }

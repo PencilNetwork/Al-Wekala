@@ -22,6 +22,7 @@ class FruitViewController: UIViewController ,ItemDelegate{
     var sendCardDelegate:SendCardDelegate?
     var fruitList:[Food] = []
      let appdelegate = UIApplication.shared.delegate as! AppDelegate
+    var parentView:MakeOrderViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
         UIView.appearance().semanticContentAttribute = .forceLeftToRight
@@ -40,7 +41,7 @@ class FruitViewController: UIViewController ,ItemDelegate{
         let networkExist = network.isConnectedToNetwork()
         
         if networkExist == true {
-        getData()
+       // getData()
             
         }else{
             if lang == "ar" {
@@ -57,8 +58,8 @@ class FruitViewController: UIViewController ,ItemDelegate{
          NotificationCenter.default.addObserver(self, selector: #selector(refreshZeroItem(_:)), name: NSNotification.Name(rawValue: "zeroItemFruit"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateCart(_:)), name: NSNotification.Name(rawValue: "updatecartfruites"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(deleteFromcart(_:)), name: NSNotification.Name(rawValue: "deleteCartfruites"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateLang(_:)), name: NSNotification.Name(rawValue: "refreshLang"), object: nil)
-       // NotificationCenter.default.addObserver(self, selector: #selector(sendFruit(_:)), name: NSNotification.Name(rawValue: "sendFruit"), object: nil)
+       // NotificationCenter.default.addObserver(self, selector: #selector(updateLang(_:)), name: NSNotification.Name(rawValue: "refreshLang"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sendfruites(_:)), name: NSNotification.Name(rawValue: "sendfruites"), object: nil)
         // Do any additional setup after loading the view.
     }
    
@@ -67,7 +68,15 @@ class FruitViewController: UIViewController ,ItemDelegate{
         // Dispose of any resources that can be recreated.
     }
     //MARK:Function
-    
+    @objc func sendfruites(_ notification: NSNotification){
+        fruitList = []
+        for item in (parentView?.fruitList)!  {
+            print(item.name)
+            fruitList.append(item)
+        }
+        self.fetchFromDatabase()
+    }
+
       @objc func refreshZeroItem(_ notification: NSNotification){
         for item in fruitList{
             item.quantity = 0
@@ -249,8 +258,10 @@ class FruitViewController: UIViewController ,ItemDelegate{
     }
     
     func minItem(index:Int){
+        if fruitList[index].quantity > 0{
         fruitList[index].quantity = fruitList[index].quantity - 1
         fruitCollectionView.reloadData()
+        }
     }
     func addToCart(index:Int,added:Bool){
         if fruitList[index].quantity > 0{

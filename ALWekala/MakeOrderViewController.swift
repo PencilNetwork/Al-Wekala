@@ -20,6 +20,7 @@ import CoreData
 import Alamofire
 class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var myProfileView: UIView!
     @IBOutlet weak var myOrderView: UIView!
     @IBOutlet weak var langView: UIView!
@@ -48,9 +49,12 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     var menu_vc:UserMenuViewController!
     var tab = 0
     var fruitList :[Food] = []
+    var vegList:[Food] = []
       var DictionaryFruit :[String: Any]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.isHidden = true
+        activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         bottomView.layer.borderWidth = 0.5
          menu_vc = self.storyboard?.instantiateViewController(withIdentifier: "UserMenuViewController") as! UserMenuViewController
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToGesture))
@@ -78,6 +82,10 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             bottomView.semanticContentAttribute = .forceRightToLeft
            tableView.semanticContentAttribute = .forceRightToLeft
             MiddleView.semanticContentAttribute = .forceRightToLeft
+            nightTimeLbl.textAlignment = .right
+            dayTimeLbl.textAlignment = .right
+            dayDeliveryLbl.textAlignment = .right
+            nightDeliveryLbl.textAlignment = .right
          //   topView.semanticContentAttribute = .forceRightToLeft
        //     languageBtn.contentHorizontalAlignment = .right
         //     langView.semanticContentAttribute = .forceRightToLeft
@@ -87,6 +95,10 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             //topView.semanticContentAttribute = .forceLeftToRight
             bottomView.semanticContentAttribute = .forceLeftToRight
             tableView.semanticContentAttribute = .forceLeftToRight
+            nightTimeLbl.textAlignment = .left
+            dayTimeLbl.textAlignment = .left
+            dayDeliveryLbl.textAlignment = .left
+            nightDeliveryLbl.textAlignment = .left
             // languageBtn.contentHorizontalAlignment = .left
            // langView.semanticContentAttribute = .forceLeftToRight
         }
@@ -96,7 +108,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         }else{
             totalLbl.text = "total:\(0)"
         }
-           fetchFromDatabase()
+          // fetchFromDatabase()
         getData()
         
         // Do any additional setup after loading the view.
@@ -179,6 +191,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         }
     }
     func sendFood(){
+        fetchFromDatabase()
         cartList = []
         for item in foodDatabase {
             for term in foodList{
@@ -199,12 +212,12 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         }else{
             totalLbl.text = "total:\(sum)"
         }
-       // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "sendFruit"), object: nil, userInfo: DictionaryFruit!)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "sendfruites"), object: nil, userInfo: nil)
     }
     func deleteFromCart(index:Int){
          removeFromDatabase(id:cartList[index].id!)
         let imageDataDict:[String: Any] = ["id": cartList[index].id!]
-        if cartList[index].category == "fruites"
+        if cartList[index].category == "fruites" ||  cartList[index].category == "فواكه"
         {
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteCartfruites"), object: nil, userInfo: imageDataDict)
@@ -233,7 +246,10 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     }
     func getData(){
         foodList = []
-       
+       fruitList = []
+        vegList = []
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
         let lang =  UserDefaults.standard.value(forKey: "lang") as! String
         var parameter :[String:AnyObject] = [String:AnyObject]()
         parameter["language"] = lang   as AnyObject?
@@ -241,7 +257,8 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
-               
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
                 switch response.result {
                 case .success:
                     if let datares = response.result.value as? [String:Any]{
@@ -273,7 +290,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
                                     vegItem.image = image
                                 }
                                 self.foodList.append(vegItem)
-                                
+                                self.vegList.append(vegItem)
                             }
                             
                         }
@@ -307,12 +324,12 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
                                self.foodList.append(fruitItem)
                                 self.fruitList.append(fruitItem)
                             }
-                            var fruitDataDict:[[String: Any]] = []
-                            for item in self.fruitList{
-                                var fruitDict :[String:Any] = ["id": item.id! ,"name": item.name!,"market_price":item.marketPrice!,"wekal_price": item.wekalaPrice!,"unit":item.unit!,"packing_fees":item.packingFees!,"category":item.category!,"image":item.image]
-                                fruitDataDict.append(fruitDict)
-                            }
-                            self.DictionaryFruit  = ["fruit": fruitDataDict]
+//                            var fruitDataDict:[[String: Any]] = []
+//                            for item in self.fruitList{
+//                                var fruitDict :[String:Any] = ["id": item.id! ,"name": item.name!,"market_price":item.marketPrice!,"wekal_price": item.wekalaPrice!,"unit":item.unit!,"packing_fees":item.packingFees!,"category":item.category!,"image":item.image]
+//                                fruitDataDict.append(fruitDict)
+//                            }
+//                            self.DictionaryFruit  = ["fruit": fruitDataDict]
                             self.sendFood()
                             
                          
@@ -520,10 +537,12 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         if segue.identifier == "fruitNav"{
             let fruitViewContoller = segue.destination as! FruitViewController
             fruitViewContoller.sendCardDelegate = self
+            fruitViewContoller.parentView = self
         }
         if segue.identifier == "vegNav"{
             let VegetableViewController = segue.destination as! VegetableViewController
             VegetableViewController.sendCardDelegate = self
+             VegetableViewController.parentView = self
         }
         if segue.identifier == "myOrder"{
             let myorder =    segue.destination as! MyOrderViewController
@@ -538,6 +557,10 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
      //   topView.semanticContentAttribute = .forceRightToLeft
      //   languageBtn.contentHorizontalAlignment = .right
        //  langView.semanticContentAttribute = .forceLeftToRight
+        nightTimeLbl.textAlignment = .right
+        dayTimeLbl.textAlignment = .right
+        dayDeliveryLbl.textAlignment = .right
+        nightDeliveryLbl.textAlignment = .right
          langView.isHidden = true
          UserDefaults.standard.set("ar", forKey: "lang")
         segmentControl.setTitle("vegetable".localized(lang: "ar"), forSegmentAt: 0)
@@ -565,6 +588,10 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     @IBAction func englishBtnAction(_ sender: Any) {
      //   cartList = []
       //  foodList = []
+        nightTimeLbl.textAlignment = .left
+        dayTimeLbl.textAlignment = .left
+        dayDeliveryLbl.textAlignment = .left
+        nightDeliveryLbl.textAlignment = .left
         MiddleView.semanticContentAttribute = .forceLeftToRight
     //    topView.semanticContentAttribute = .forceLeftToRight
         bottomView.semanticContentAttribute = .forceLeftToRight
@@ -585,7 +612,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "changeMenuLanguage"), object: nil, userInfo: nil)
         if tab == 0 {
              getData()
-              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshLang"), object: nil, userInfo: nil)
+             // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshLang"), object: nil, userInfo: nil)
         }else if tab == 2 {
              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "MyOrder"), object: nil, userInfo: nil)
         }else{
@@ -621,7 +648,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         }else{
             let lang = UserDefaults.standard.value(forKey: "lang") as! String
             if lang == "ar" {
-            let alert = UIAlertController(title: "", message: "اضف الي السلة" , preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "", message: "أضف إلى العربة" , preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             }else{
@@ -646,7 +673,11 @@ extension MakeOrderViewController : UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "CardCell", for: indexPath) as! CartTableViewCell
         let lang = UserDefaults.standard.value(forKey: "lang") as! String
         if lang == "ar" {
-            
+           cell.name.textAlignment = .right
+            cell.contentView.semanticContentAttribute = .forceRightToLeft
+        }else{
+            cell.name.textAlignment =  .left
+             cell.contentView.semanticContentAttribute =  .forceLeftToRight
         }
         cell.index = indexPath.row
         cell.cartAction = self 
@@ -738,7 +769,7 @@ extension MakeOrderViewController :menuDelegate{
         
             myProfileView.isHidden = true
             getData()
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshLang"), object: nil, userInfo: nil)
+           // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshLang"), object: nil, userInfo: nil)
         case 1:
             print("my profile")
             if lang == "ar" {

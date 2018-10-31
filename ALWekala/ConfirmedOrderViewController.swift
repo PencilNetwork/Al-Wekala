@@ -39,6 +39,9 @@ class ConfirmedOrderViewController: UIViewController {
     var  stotalprice = 0.0
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = ""
+        
+        self.navigationController?.isNavigationBarHidden = false
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         self.foodTableView.separatorStyle = .none
@@ -47,6 +50,9 @@ class ConfirmedOrderViewController: UIViewController {
         foodTableView.delegate = self
         tableHeight.constant = CGFloat((cartData?.cartList.count)! * 60)
         containerHeight.constant =  tableHeight.constant + 250
+        if (containerHeight.constant + 104) > viewHeight.constant {
+            viewHeight.constant  = containerHeight.constant + 104
+        }
         if lang == "ar" {
             itemLbl.text = "item".localized(lang: "ar")
             quantityLbl.text = "quantity".localized(lang: "ar")
@@ -131,6 +137,17 @@ class ConfirmedOrderViewController: UIViewController {
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationItem.title = ""
+        
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        self.navigationController?.isNavigationBarHidden = true
     }
     func sendData(){
         activityIndicator.isHidden = false

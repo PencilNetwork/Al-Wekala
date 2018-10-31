@@ -11,11 +11,12 @@ import Alamofire
 import CoreData
 class VegetableViewController: UIViewController,ItemDelegate {
 
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+  
     @IBOutlet weak var vegCollectionView: UICollectionView!
     var vegetableList:[Food] = []
      var sendCardDelegate:SendCardDelegate?
     let appdelegate = UIApplication.shared.delegate as! AppDelegate
+     var parentView:MakeOrderViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
          UIView.appearance().semanticContentAttribute = .forceLeftToRight
@@ -25,34 +26,28 @@ class VegetableViewController: UIViewController,ItemDelegate {
 //        if lang == "ar"{
 //            vegCollectionView.semanticContentAttribute = .forceRightToLeft
 //        }
-        let network = Network()
-        let networkExist = network.isConnectedToNetwork()
+       
         
-        if networkExist == true {
-           getData()
-            
-        }else{
-            if lang == "ar" {
-                let alert = UIAlertController(title: "تحذير", message: "لا توجد شبكة", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }else{
-                let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
-            
-        }
+        
          NotificationCenter.default.addObserver(self, selector: #selector(refreshZeroItem(_:)), name: NSNotification.Name(rawValue: "zeroItemFruit"), object: nil)
           NotificationCenter.default.addObserver(self, selector: #selector(updateCart(_:)), name: NSNotification.Name(rawValue: "updatecart"), object: nil)
           NotificationCenter.default.addObserver(self, selector: #selector(deleteFromcart(_:)), name: NSNotification.Name(rawValue: "deleteCart"), object: nil)
-         NotificationCenter.default.addObserver(self, selector: #selector(updateLang(_:)), name: NSNotification.Name(rawValue: "refreshLang"), object: nil)
+       //  NotificationCenter.default.addObserver(self, selector: #selector(updateLang(_:)), name: NSNotification.Name(rawValue: "refreshLang"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sendfruites(_:)), name: NSNotification.Name(rawValue: "sendfruites"), object: nil)
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @objc func sendfruites(_ notification: NSNotification){
+        vegetableList = []
+        for item in (parentView?.vegList)!  {
+            print(item.name)
+            vegetableList.append(item)
+        }
+        self.fetchFromDatabase()
     }
     @objc func refreshZeroItem(_ notification: NSNotification){
         for item in vegetableList{
@@ -118,28 +113,7 @@ class VegetableViewController: UIViewController,ItemDelegate {
     }
     */
     //MARK:Function
-    @objc func updateLang(_ notification: NSNotification){
-        vegetableList = []
-         let lang =  UserDefaults.standard.value(forKey: "lang") as! String
-        let network = Network()
-        let networkExist = network.isConnectedToNetwork()
-        
-        if networkExist == true {
-            getData()
-            
-        }else{
-            if lang == "ar" {
-                let alert = UIAlertController(title: "تحذير", message: "لا توجد شبكة", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }else{
-                let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
-            
-        }
-    }
+   
       @objc func updateCart(_ notification: NSNotification){
         if let dict = notification.userInfo as NSDictionary? {
             
@@ -185,71 +159,7 @@ class VegetableViewController: UIViewController,ItemDelegate {
         vegCollectionView.reloadData()
         sendCardDelegate?.sendItemToCart(Item: vegetableList[index], flag: added)
     }
-    func getData(){
-        
-        self.activityIndicator.isHidden = false
-        self.activityIndicator.startAnimating()
-        let lang =  UserDefaults.standard.value(forKey: "lang") as! String
-        var parameter :[String:AnyObject] = [String:AnyObject]()
-        parameter["language"] = lang   as AnyObject?
-        let url = Constant.baseUrl + Constant.getItem
-        Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
-            .responseJSON { response in
-                print(response)
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.isHidden = true
-                switch response.result {
-                case .success:
-                    if let datares = response.result.value as? [String:Any]{
-                        if let vegetable = datares["vegtables"] as? [Dictionary<String,Any>]{
-                            for item in vegetable {
-                                var vegItem = Food()
-                                if let id = item["id"] as? Int {
-                                    vegItem.id = id
-                                }
-                                if let name = item["name"] as? String{
-                                    vegItem.name = name
-                                }
-                                if let marketPrice = item["market_price"] as? Double {
-                                    vegItem.marketPrice = marketPrice
-                                }
-                                if let wekal_price = item["wekal_price"] as? Double {
-                                    vegItem.wekalaPrice = wekal_price
-                                }
-                                if let unit = item["unit"] as? String{
-                                    vegItem.unit = unit
-                                }
-                                if let packingFees = item["packing_fees"] as? String{
-                                    vegItem.packingFees = packingFees
-                                }
-                                if let category = item["category"] as? String{
-                                    vegItem.category = category
-                                }
-                                if let image = item["image"] as? String {
-                                    vegItem.image = image
-                                }
-                                self.vegetableList.append(vegItem)
-                                
-                            }
-                           
-                        }
-                      //  self.sendCardDelegate?.sendFood(food:self.vegetableList)
-                        //   self.vegCollectionView.reloadData()
-                        self.fetchFromDatabase()
-                    }
-                    
-                    
-                    
-                case .failure(let error):
-                    print(error)
-                    
-                    let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                    
-                }
-        }
-    }
+    
 }
 extension VegetableViewController : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -262,12 +172,58 @@ extension VegetableViewController : UICollectionViewDelegate,UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VegetableCollectionViewCell", for: indexPath) as! VegetableCollectionViewCell
+        // cell.contentView.isUserInteractionEnabled = true
         cell.index = indexPath.row
         cell.added = vegetableList[indexPath.row].added
+        let lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar" {
+            
+            cell.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
+            cell.wekalaPriceLBL.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.wekalaPriceLBL.text = "wekalaPrice".localized(lang: "ar") + ":"
+            
+            cell.wekalaPriceTxt.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.wekalaPriceTxt.textAlignment = .right
+            cell.marketPrice.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.marketPriceLBL.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.addToCard.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.termLbl.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.quantity.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.nameLBL.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.marketPrice.text = "marketPrice".localized(lang: "ar") + ":"
+            cell.marketPriceLBL.textAlignment = .right
+            cell.nameLBL.textAlignment = .right
+        }else{
+            
+            cell.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            cell.wekalaPriceLBL.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            
+            cell.wekalaPriceTxt.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.wekalaPriceTxt.textAlignment = .left
+            cell.marketPrice.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.marketPriceLBL.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.addToCard.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.termLbl.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.quantity.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.nameLBL.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            cell.marketPriceLBL.textAlignment = .left
+            cell.nameLBL.textAlignment = .left
+            
+            cell.wekalaPriceLBL.text = "wekalaPrice".localized(lang: "en")
+            cell.marketPrice.text = "marketPrice".localized(lang: "en")
+        }
         if vegetableList[indexPath.row].added == true {
             cell.photo.alpha = CGFloat(0.4)
             cell.addToCard.backgroundColor = UIColor.red
-            cell.addToCard.setTitle("Added", for: .normal)
+            if lang == "ar" {
+                cell.addToCard.setTitle("added".localized(lang: "ar"), for: .normal)
+            }else{
+                cell.addToCard.setTitle("Added", for: .normal)
+            }
             cell.minusBtn.isEnabled = false
             cell.plusBtn.isEnabled = false
             cell.marketPrice.alpha = CGFloat(0.4)
@@ -287,12 +243,16 @@ extension VegetableViewController : UICollectionViewDelegate,UICollectionViewDat
             cell.quantity.alpha = 1
             cell.nameLBL.alpha = 1
             cell.addToCard.backgroundColor = UIColor.black
-            cell.addToCard.setTitle("Add to cart", for: .normal)
+            if lang == "ar" {
+                cell.addToCard.setTitle("addtoCart".localized(lang: "ar"), for: .normal)
+            }else{
+                cell.addToCard.setTitle("Add to cart", for: .normal)
+            }
+            
             cell.minusBtn.isEnabled = true
             cell.plusBtn.isEnabled = true
         }
         cell.itemDelegate = self
-         cell.added = vegetableList[indexPath.row].added
         cell.marketPriceLBL.text = "\(vegetableList[indexPath.row].marketPrice!)"
         cell.wekalaPriceTxt.text = "\(vegetableList[indexPath.row].wekalaPrice!)"
         cell.nameLBL.text = vegetableList[indexPath.row].name

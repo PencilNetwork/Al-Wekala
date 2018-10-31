@@ -39,6 +39,7 @@ class ViewController: UIViewController ,GIDSignInUIDelegate{
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         NotificationCenter.default.addObserver(self, selector: #selector(putImage(_:)), name: NSNotification.Name(rawValue: "putName"), object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(deleteActivityIndicator(_:)), name: NSNotification.Name(rawValue: "deleteActivityIndi"), object: nil)
         facebookBtn.layer.cornerRadius = 10
         googleBtn.layer.cornerRadius = 10
          UserDefaults.standard.set("en", forKey: "lang")
@@ -55,24 +56,28 @@ class ViewController: UIViewController ,GIDSignInUIDelegate{
         }else{
             contentView.semanticContentAttribute = .forceLeftToRight
         }
-//        if flag == true {
-//            self.continueBtn.isHidden = true
-//            self.profileImg.isHidden = true
-//            self.cartImg.isHidden = false
-//            self.googleBtn.isHidden = false
-//            self.facebookBtn.isHidden = false
-//            self.lineView.isHidden = true
-//            self.nameView.isHidden = true
-//            self.languageBtn.isHidden = false
-//            self.downArrow.isHidden = false
-//            flag = false
-//        }
+        if flag == true {
+            self.continueBtn.isHidden = true
+            self.profileImg.isHidden = true
+            self.cartImg.isHidden = false
+            self.googleBtn.isHidden = false
+            self.facebookBtn.isHidden = false
+            self.lineView.isHidden = true
+            self.nameView.isHidden = true
+            self.languageBtn.isHidden = false
+            self.downArrow.isHidden = false
+            flag = false
+        }
         self.navigationController?.isNavigationBarHidden = true
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+      @objc func deleteActivityIndicator(_ notification: NSNotification){
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
     }
     @objc func putImage(_ notification: NSNotification){
         profileImg.isHidden = false

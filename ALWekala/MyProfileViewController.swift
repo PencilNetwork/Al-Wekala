@@ -49,7 +49,8 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         flatNumberTxt.delegate = self
         numberTxt.delegate = self
         nameTxt.delegate = self
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(MyProfileViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MyProfileViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
            NotificationCenter.default.addObserver(self, selector: #selector(myProfile(_:)), name: NSNotification.Name(rawValue: "MyProfile"), object: nil)
         // Do any additional setup after loading the view.
         //
@@ -65,6 +66,7 @@ class MyProfileViewController: UIViewController ,MapDelegate{
             lat = Double((person?.latitude)!)!
             long = Double((person?.langitude)!)!
             self.address = (person?.address)!
+            self.addressLBL.text = (person?.address)!
         }
     }
     func arabicLang(){
@@ -72,7 +74,7 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         confirmBtn.setTitle("confirm".localized(lang: "ar"), for: .normal)
         setLocationBtn.setTitle("setYourLocation".localized(lang: "ar"), for: .normal)
        
-        regionBtn.setTitle("region".localized(lang: "ar"), for: .normal)
+     //   regionBtn.setTitle("region".localized(lang: "ar"), for: .normal)
         numberTxt.placeholder = "number".localized(lang: "ar")
         alexandria.placeholder = "alexandria".localized(lang: "ar")
         landscapetxt.placeholder = "landscape".localized(lang: "ar")
@@ -91,7 +93,7 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         confirmBtn.setTitle("Confirm editing", for: .normal)
         setLocationBtn.setTitle("Edit Your Location", for: .normal)
         
-        regionBtn.setTitle("region", for: .normal)
+      //  regionBtn.setTitle("region", for: .normal)
         numberTxt.placeholder = "Phone"
         alexandria.placeholder = "Alexandria"
         landscapetxt.placeholder = "landscape"
@@ -105,6 +107,37 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         flatNumber.text = "Flat Number"
         landscape.text = "landscape"
     
+    }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if up == true {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                // if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+                
+                //}
+            }
+        }
+        
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if up == true {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                //  if self.view.frame.origin.y != 0{
+                //                self.view.frame.origin.y += keyboardSize.height
+                self.view.frame.origin.y  = 0
+                // }
+            }
+        }
+        
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField)
+    {
+        if  textField.tag == 3{
+            up = true
+        }else{
+            up = false
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -134,6 +167,7 @@ class MyProfileViewController: UIViewController ,MapDelegate{
     @IBAction func regionBtnDone(_ sender: Any) {
         regionPickerView.isHidden = true
         regionDone.isHidden = true
+         self.showToastAnother(message: "please make sure from your location")
     }
     @IBAction func regionBtnAction(_ sender: Any) {
         regionPickerView.isHidden = !regionPickerView.isHidden
@@ -268,29 +302,9 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         textField.backgroundColor = UIColor.white
         
     }
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if up == true {
-            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-                // if self.view.frame.origin.y == 0{
-                self.view.frame.origin.y -= keyboardSize.height
-                
-                //}
-            }
-        }
-        
-    }
+   
     
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if up == true {
-            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-                //  if self.view.frame.origin.y != 0{
-                //                self.view.frame.origin.y += keyboardSize.height
-                self.view.frame.origin.y  = 0
-                // }
-            }
-        }
-        
-    }
+   
     func checkTxtField()->Bool{
         var validFlag = true
         let lang = UserDefaults.standard.value(forKey: "lang") as! String
@@ -335,6 +349,9 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         self.address = Address
         self.addressLBL.text = self.address
         self.regionMap = region
+        if regionSelected == -1 {
+            self.showToastAnother(message: "please make sure from your region")
+        }
        // regiointry.text = region
     }
     func getRegion(){
@@ -427,7 +444,7 @@ extension MyProfileViewController: UIPickerViewDelegate,UIPickerViewDataSource{
             regionSelected = row
             
         }
-        
+       
         regionBtn.setTitle(regionList[row].name, for: .normal)
         
         
@@ -454,14 +471,8 @@ extension MyProfileViewController: UITextFieldDelegate{
         }
         return true
     }
-    func textFieldDidBeginEditing(_ textField: UITextField)
-    {
-        if  textField.tag == 3{
-            up = true
-        }else{
-            up = false
-        }
-    }
+    
+    
     //     func textFieldDidEndEditing(_ textField: UITextField){
     //        let nextTag = textField.tag + 1
     //

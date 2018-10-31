@@ -29,10 +29,10 @@ class ResultOrderViewController: UIViewController {
            if lang == "ar" {
             succefullyCreatedLBL.text = "orderIsCreated".localized(lang: "ar")
             yourorderId.text = "yourOrder".localized(lang: "ar")
-            itWillBedeliveredLBL.text = "itWillDelivered".localized(lang: "ar") +  (cartData?.time!)!
+            itWillBedeliveredLBL.text = "itWillDelivered".localized(lang: "ar") + " " +  (cartData?.time!)!
             backToHomeBtn.setTitle("backToHome".localized(lang: "ar"), for: .normal)
            }else{
-              itWillBedeliveredLBL.text = "it will be delivered" +  (cartData?.time!)!
+              itWillBedeliveredLBL.text = "it will be delivered" + " " +  (cartData?.time!)!
            }
         orderIdLBL.text = "\(orderId!)"
         

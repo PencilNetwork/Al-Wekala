@@ -46,7 +46,8 @@ class LocationViewController: UIViewController ,MapDelegate{
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         hideKeyboardWhenTappedAround()
         self.navigationController?.navigationBar.topItem?.title = ""
-        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+          self.navigationController?.navigationBar.backItem?.title = ""
         confirmBtn.layer.cornerRadius = 10
         setYourLocationBtn.layer.cornerRadius = 10
         if lang == "ar" {
@@ -103,12 +104,13 @@ class LocationViewController: UIViewController ,MapDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.navigationItem.title = ""
         
         self.navigationController?.isNavigationBarHidden = false
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
-        self.navigationController?.isNavigationBarHidden = true
+  //      self.navigationController?.isNavigationBarHidden = true
     }
     //MARK:Function
     func getRegion(){

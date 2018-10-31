@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,GIDSignInDelegate{
     }
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
-            
+             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteActivityIndi"), object: nil, userInfo: nil)
             return
         }
         
@@ -52,6 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,GIDSignInDelegate{
                                                        accessToken: authentication.accessToken)
         Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
             if let error = error {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteActivityIndi"), object: nil, userInfo: nil)
                 print("failed to create a firbase user with google account",error)
                 return
             }

@@ -106,14 +106,14 @@ class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableVie
 //            deletepermission?.start(completionHandler: {(connection,result,error)-> Void in
 //                print("the delete permission is (result)")
 //            })
-//            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
-//            for aViewController in viewControllers {
-//                if aViewController is ViewController {
-//         
-//                 let a = aViewController as! ViewController
-//            a.flag = true
-//                }
-//            }
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers
+            for aViewController in viewControllers {
+                if aViewController is ViewController {
+         
+                 let a = aViewController as! ViewController
+            a.flag = true
+                }
+            }
             self.navigationController?.popToRootViewController( animated: false )
 
         }
