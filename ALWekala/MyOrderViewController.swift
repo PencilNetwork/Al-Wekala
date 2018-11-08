@@ -36,7 +36,16 @@ class MyOrderViewController: UIViewController {
         }else{
             orderTableView.semanticContentAttribute = .forceLeftToRight
         }
-        getData()
+        let network = Network()
+        let networkExist = network.isConnectedToNetwork()
+        if networkExist == true {
+            getData()
+        }else{
+            
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     func convertDateFormate(input:String,form:String)-> String {
         let inputFormatter = DateFormatter()

@@ -118,6 +118,7 @@ extension MyOrderDetailViewController :UITableViewDelegate,UITableViewDataSource
             cell.itemName.textAlignment = .right
             cell.quantityLbl.textAlignment = .right
             cell.priceLbl.textAlignment = .right
+            cell.contentView.semanticContentAttribute = .forceRightToLeft
         }
         return cell
     }

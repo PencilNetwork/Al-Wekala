@@ -55,19 +55,11 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         // Do any additional setup after loading the view.
         //
          NotificationCenter.default.addObserver(self, selector: #selector(changeLang(_:)), name: NSNotification.Name(rawValue: "changeProfileLanguage"), object: nil)
-        if let data = UserDefaults.standard.data(forKey: "person"){
-            let person = NSKeyedUnarchiver.unarchiveObject(with: data) as? Person
-           
-            nameTxt.text = person?.name
-            numberTxt.text = person?.phone
-            regionBtn.setTitle(person?.regoin, for: .normal)
-            flatNumberTxt.text = person?.flat_number
-            landscapetxt.text = person?.besides
-            lat = Double((person?.latitude)!)!
-            long = Double((person?.langitude)!)!
-            self.address = (person?.address)!
-            self.addressLBL.text = (person?.address)!
-        }
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
     }
     func arabicLang(){
         nameTxt.placeholder = "name".localized(lang: "ar")
@@ -144,6 +136,23 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         // Dispose of any resources that can be recreated.
     }
     @objc func myProfile(_ notification: NSNotification){
+        regionSelected = -1
+        locationFlag = false
+        lat = 0.0
+        long = 0.0
+        if let data = UserDefaults.standard.data(forKey: "person"){
+            let person = NSKeyedUnarchiver.unarchiveObject(with: data) as? Person
+            
+            nameTxt.text = person?.name
+            numberTxt.text = person?.phone
+            regionBtn.setTitle(person?.regoin, for: .normal)
+            flatNumberTxt.text = person?.flat_number
+            landscapetxt.text = person?.besides
+            lat = Double((person?.latitude)!)!
+            long = Double((person?.langitude)!)!
+            self.address = (person?.address)!
+            self.addressLBL.text = (person?.address)!
+        }
         getRegion()
            let lang = UserDefaults.standard.value(forKey: "lang") as! String
         if lang == "ar"{
@@ -167,7 +176,9 @@ class MyProfileViewController: UIViewController ,MapDelegate{
     @IBAction func regionBtnDone(_ sender: Any) {
         regionPickerView.isHidden = true
         regionDone.isHidden = true
-         self.showToastAnother(message: "please make sure from your location")
+        if locationFlag == false {
+           self.showToastAnother(message: "please make sure from your location")
+        }
     }
     @IBAction func regionBtnAction(_ sender: Any) {
         regionPickerView.isHidden = !regionPickerView.isHidden
@@ -227,11 +238,28 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         parameter["name"] = nameTxt.text! as AnyObject?
         parameter["token"] = "token"   as AnyObject?
         parameter["phone"] = numberTxt.text! as  AnyObject?
-        parameter["address"] = self.address! as  AnyObject?
+        if self.address == nil || self.address == "" {
+            self.address = (person?.address)!
+            self.addressLBL.text = (person?.address)!
+            parameter["address"] = (person?.address)! as  AnyObject?
+        }else{
+            parameter["address"] = self.address! as  AnyObject?
+        }
+        
         parameter["flat_number"] = flatNumberTxt.text! as  AnyObject?
-      
-        parameter["langitude"] = self.long as  AnyObject?
-        parameter["latitude"] = self.lat as  AnyObject?
+        if self.long == 0{
+              long = Double((person?.langitude)!)!
+             parameter["langitude"] = (person?.langitude)! as  AnyObject?
+        }else{
+             parameter["langitude"] = self.long as  AnyObject?
+        }
+        if lat == 0 {
+              lat = Double((person?.latitude)!)!
+            parameter["latitude"] = (person?.latitude)! as  AnyObject?
+        }else{
+            parameter["latitude"] = self.lat as  AnyObject?
+        }
+        
         parameter["city"] = "Alexandria" as  AnyObject?
         if regionSelected == -1 {
              parameter["regoin"] = (person?.regoin)!  as  AnyObject?
@@ -256,8 +284,12 @@ class MyProfileViewController: UIViewController ,MapDelegate{
                                     self.showToast(message : errors)
                                 }
                             }else{
-                                
-                              self.showToast(message :"successful update")
+                                if lang == "ar"{
+                                    self.showToast(message :"تم التحديث بنجاح")
+                                }else{
+                                    self.showToast(message :"successful update")
+                                }
+                              
                                 var region = ""
                                 if self.regionSelected == -1 {
                                    region = (person?.regoin)!
@@ -340,7 +372,23 @@ class MyProfileViewController: UIViewController ,MapDelegate{
             validFlag = false
             landscapetxt.backgroundColor = .red
         }
-        
+        if locationFlag == true {
+            
+                if address == "" || long == 0 && lat == 0 {
+                    validFlag = false
+                    if lang == "ar"
+                    {
+                        let alert = UIAlertController(title: "", message: "حدد موقعك" , preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title:  "حسنا", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }else{
+                        let alert = UIAlertController(title: "", message: "select your location" , preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            
+        }
         return validFlag
     }
     func createMap(lat:Double,long:Double,Address:String,region:String){

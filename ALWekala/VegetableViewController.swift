@@ -17,8 +17,15 @@ class VegetableViewController: UIViewController,ItemDelegate {
      var sendCardDelegate:SendCardDelegate?
     let appdelegate = UIApplication.shared.delegate as! AppDelegate
      var parentView:MakeOrderViewController?
+      private let refreshControl = UIRefreshControl()
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 10.0, *) {
+            self.vegCollectionView.refreshControl = refreshControl
+        } else {
+            self.vegCollectionView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshControlData(_:)), for: .valueChanged)
          UIView.appearance().semanticContentAttribute = .forceLeftToRight
         vegCollectionView.delegate = self
         vegCollectionView.dataSource = self
@@ -40,6 +47,11 @@ class VegetableViewController: UIViewController,ItemDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @objc private func refreshControlData(_ sender: Any) {
+        // Fetch Weather Data
+        sendCardDelegate?.refreshControlData()
+        self.refreshControl.endRefreshing()
     }
     @objc func sendfruites(_ notification: NSNotification){
         vegetableList = []
@@ -151,15 +163,21 @@ class VegetableViewController: UIViewController,ItemDelegate {
     }
     
     func minItem(index:Int){
+        if vegetableList[index].quantity > 0{
         vegetableList[index].quantity = vegetableList[index].quantity - 1
         vegCollectionView.reloadData()
+        }
     }
     func addToCart(index:Int,added:Bool){
+    if vegetableList[index].quantity > 0{
         vegetableList[index].added = added
+        if vegetableList[index].added == false{ // remove
+            vegetableList[index].quantity = 0
+        }
         vegCollectionView.reloadData()
         sendCardDelegate?.sendItemToCart(Item: vegetableList[index], flag: added)
+        }
     }
-    
 }
 extension VegetableViewController : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

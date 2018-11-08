@@ -10,6 +10,7 @@ import UIKit
 
 class TimeViewController: UIViewController {
 
+   
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var okBtn: UIButton!
     @IBOutlet weak var nightLabel: UILabel!
@@ -22,6 +23,7 @@ class TimeViewController: UIViewController {
     var nightTime  = ""
     var dayTime = ""
     var cartData :CartData?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         okBtn.layer.cornerRadius  = 10
@@ -40,6 +42,7 @@ class TimeViewController: UIViewController {
         formatter.locale = NSLocale.init(localeIdentifier: "en") as Locale
         let timeStr = formatter.string(from: time)
         print("timeNow\(timeStr)")
+        
         print("tommorripowIs \(Date().tomorrow)")
         let timeArray  = timeStr.components(separatedBy: ":")
         let hour = Int(timeArray[0])

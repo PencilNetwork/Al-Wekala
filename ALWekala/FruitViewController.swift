@@ -23,8 +23,15 @@ class FruitViewController: UIViewController ,ItemDelegate{
     var fruitList:[Food] = []
      let appdelegate = UIApplication.shared.delegate as! AppDelegate
     var parentView:MakeOrderViewController?
+        private let refreshControl = UIRefreshControl()
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 10.0, *) {
+            self.fruitCollectionView.refreshControl = refreshControl
+        } else {
+            self.fruitCollectionView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshControlData(_:)), for: .valueChanged)
         UIView.appearance().semanticContentAttribute = .forceLeftToRight
         fruitCollectionView.delegate = self
         fruitCollectionView.dataSource = self
@@ -68,6 +75,11 @@ class FruitViewController: UIViewController ,ItemDelegate{
         // Dispose of any resources that can be recreated.
     }
     //MARK:Function
+    @objc private func refreshControlData(_ sender: Any) {
+        // Fetch Weather Data
+      sendCardDelegate?.refreshControlData()
+          self.refreshControl.endRefreshing()
+    }
     @objc func sendfruites(_ notification: NSNotification){
         fruitList = []
         for item in (parentView?.fruitList)!  {
@@ -266,6 +278,9 @@ class FruitViewController: UIViewController ,ItemDelegate{
     func addToCart(index:Int,added:Bool){
         if fruitList[index].quantity > 0{
             fruitList[index].added = added
+            if fruitList[index].added == false{ // remove
+                fruitList[index].quantity = 0 
+            }
             fruitCollectionView.reloadData()
             sendCardDelegate?.sendItemToCart(Item: fruitList[index], flag: added)
         }

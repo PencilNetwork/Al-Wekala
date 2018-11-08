@@ -37,6 +37,7 @@ class ConfirmedOrderViewController: UIViewController {
     let lang = UserDefaults.standard.value(forKey: "lang") as! String
      var totalPack = 0.0
     var  stotalprice = 0.0
+    var totalWithOutDeliveryOrPack = 0.0
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = ""
@@ -92,6 +93,7 @@ class ConfirmedOrderViewController: UIViewController {
             totalPack = totalPack + Double(item.quantity) * Double(item.packingFees!)!
         }
         totalPrice.text = "\(sum) L.E"
+        totalWithOutDeliveryOrPack = sum
          packingFeesPrice.text = "\(totalPack) L.E"
         deliveryFeesPrice.text = "\((cartData?.deliveryfees)!) " + "L.E"
          stotalprice = sum + totalPack + (cartData?.deliveryfees)!  // total price
@@ -161,6 +163,7 @@ class ConfirmedOrderViewController: UIViewController {
             cart["total_per_quantatiy"] = Double(item.quantity) * (item.wekalaPrice)! as  AnyObject?
             cardItems.append(cart)
         }
+        parameter["sub_total"] = totalWithOutDeliveryOrPack  as AnyObject?
         parameter["items"] = cardItems as AnyObject?
         parameter["delevery_fees"] = (cartData?.deliveryfees)! as AnyObject?
         parameter["total_packing_fees"] = totalPack as AnyObject?
@@ -249,6 +252,7 @@ extension ConfirmedOrderViewController :UITableViewDelegate,UITableViewDataSourc
             cell.itemName.textAlignment = .right
             cell.quantityLbl.textAlignment = .right
             cell.priceLbl.textAlignment = .right
+             cell.contentView.semanticContentAttribute = .forceRightToLeft
         }
         return cell
     }

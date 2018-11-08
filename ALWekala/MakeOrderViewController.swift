@@ -8,6 +8,7 @@
 
 protocol SendCardDelegate{
     func sendItemToCart(Item:Food,flag:Bool)
+    func refreshControlData()
  //   func sendFood(food:[Food])
 }
 protocol CartAction{
@@ -51,8 +52,11 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     var fruitList :[Food] = []
     var vegList:[Food] = []
       var DictionaryFruit :[String: Any]?
+
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+        print( UIDevice.current.identifierForVendor?.uuidString)
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         bottomView.layer.borderWidth = 0.5
@@ -109,8 +113,17 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             totalLbl.text = "total:\(0)"
         }
           // fetchFromDatabase()
-        getData()
         
+        let network = Network()
+        let networkExist = network.isConnectedToNetwork()
+        if networkExist == true {
+            getData()
+        }else{
+            
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -140,6 +153,18 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     }
     
     //MARK:functionDelegate
+    func refreshControlData(){
+        let network = Network()
+        let networkExist = network.isConnectedToNetwork()
+        if networkExist == true {
+            getData()
+        }else{
+            
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
     func plusToCart(index:Int){
         cartList[index].quantity = cartList[index].quantity + 1
         updateDatabase(Id:cartList[index].id!,Quantity:cartList[index].quantity)
@@ -464,10 +489,15 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             }
             
         }else{
+            var index  = -1
             for i in  0..<cartList.count{
-                if cartList[i].id == Item.id {
-                    cartList.remove(at: i)
+                if cartList[i].id! == Item.id! {
+                    index = i
+                    
                 }
+            }
+            if index != -1 {
+                cartList.remove(at: index)
             }
             //remove from database
              removeFromDatabase(id:Item.id!)

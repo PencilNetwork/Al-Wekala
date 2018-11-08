@@ -13,6 +13,7 @@ class LocationViewController: UIViewController ,MapDelegate{
     @IBOutlet weak var addressCheckBox: UIButton!
     @IBOutlet weak var landscapeTxt: UITextField!
     
+    @IBOutlet weak var defaultRegion: UILabel!
     @IBOutlet weak var confirmBtn: UIButton!
     @IBOutlet weak var selectedAddressLbl: UILabel!
     @IBOutlet weak var setYourLocationBtn: UIButton!
@@ -64,6 +65,7 @@ class LocationViewController: UIViewController ,MapDelegate{
             defaultLabel.text = "defaultAddress".localized(lang: "ar")
             regionBtn.contentHorizontalAlignment = .right
             flatNumberTxt.textAlignment = .right
+            defaultRegion.textAlignment = .right
             landscapeTxt.textAlignment = .right
             defaultFlatLBL.textAlignment = .right
             }
@@ -74,9 +76,10 @@ class LocationViewController: UIViewController ,MapDelegate{
             
             if lang == "ar" {
                 defaultFlatLBL.text = "رقم الشقة:" + " \((person?.flat_number)!)"
-                
+                defaultRegion.text = "المنطقة: " + (person?.regoin)!
             }else{
                defaultFlatLBL.text = "Flat Number: \((person?.flat_number)!)"
+                defaultRegion.text = "Region: " + (person?.regoin)!
             }
            
         }
@@ -218,6 +221,20 @@ class LocationViewController: UIViewController ,MapDelegate{
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
+        }else{
+            if address == "" || long == 0 && lat == 0 {
+                 validFlag = false
+                if lang == "ar"
+                {
+                    let alert = UIAlertController(title: "", message: "حدد موقعك" , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title:  "حسنا", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }else{
+                    let alert = UIAlertController(title: "", message: "select your location" , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
         }
         return validFlag
     }
@@ -280,7 +297,8 @@ class LocationViewController: UIViewController ,MapDelegate{
                     vc.cartData = cartData
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
-            }else{
+            }
+            if addressFlag == true {
                 let valid = checkTxtField()
                 if valid == true{
                cartData?.address  = address!
