@@ -20,6 +20,9 @@ class VegetableViewController: UIViewController,ItemDelegate {
       private let refreshControl = UIRefreshControl()
     override func viewDidLoad() {
         super.viewDidLoad()
+//        vegCollectionView.layer.cornerRadius = 10
+//        vegCollectionView.layer.borderWidth = 2
+//        vegCollectionView.layer.borderColor = UIColor(red:201/255, green: 201/255, blue: 201/255, alpha: 1).cgColor
         if #available(iOS 10.0, *) {
             self.vegCollectionView.refreshControl = refreshControl
         } else {
@@ -159,13 +162,26 @@ class VegetableViewController: UIViewController,ItemDelegate {
     }
     func plusItem(index:Int){
         vegetableList[index].quantity = vegetableList[index].quantity + 1
-        vegCollectionView.reloadData()
+        
+        if vegetableList[index].quantity == 1{
+             vegetableList[index].added = true
+            sendCardDelegate?.sendItemToCart(Item: vegetableList[index], flag: true)// add to cart and database
+        }else{ //> 1  update cart
+            sendCardDelegate?.updateItemInCart(ItemId:  vegetableList[index].id!, Quantity: vegetableList[index].quantity)
+        }
+         vegCollectionView.reloadData()
     }
     
     func minItem(index:Int){
         if vegetableList[index].quantity > 0{
-        vegetableList[index].quantity = vegetableList[index].quantity - 1
-        vegCollectionView.reloadData()
+            vegetableList[index].quantity = vegetableList[index].quantity - 1
+            if vegetableList[index].quantity == 0 {
+                 vegetableList[index].added = false
+                sendCardDelegate?.sendItemToCart(Item: vegetableList[index], flag: false) //remove from cart and database
+            }else{ //> o update cart
+                sendCardDelegate?.updateItemInCart(ItemId:  vegetableList[index].id!, Quantity: vegetableList[index].quantity)
+            }
+            vegCollectionView.reloadData()
         }
     }
     func addToCart(index:Int,added:Bool){
@@ -190,97 +206,69 @@ extension VegetableViewController : UICollectionViewDelegate,UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VegetableCollectionViewCell", for: indexPath) as! VegetableCollectionViewCell
+        cell.alwekalaLBL.numberOfLines = 1
+        cell.alwekalaLBL.adjustsFontSizeToFitWidth = true
+        cell.alwekalaLBL.lineBreakMode = NSLineBreakMode.byClipping
         // cell.contentView.isUserInteractionEnabled = true
+       
+//        if indexPath.row < vegetableList.count - 1 {
+//            cell.lineView.isHidden = false
+//        }else{
+//             cell.lineView.isHidden = true
+//        }
+        cell.imgWidth.constant = (self.view.frame.width - 10)/4
+        cell.imgHeight.constant =  (self.view.frame.width - 10)/4
+        cell.marketPriceTxtWidth.constant = ((self.view.frame.width - 10)/4) - 5
+        //cell.addtoCardWidth.constant = (self.view.frame.width - 5 )/4
         cell.index = indexPath.row
         cell.added = vegetableList[indexPath.row].added
+//        cell.addToCard.titleLabel?.numberOfLines = 1
+//        cell.addToCard.titleLabel?.adjustsFontSizeToFitWidth = true
+//        cell.addToCard.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
         let lang = UserDefaults.standard.value(forKey: "lang") as! String
         if lang == "ar" {
+            cell.containerView.semanticContentAttribute = .forceRightToLeft
+            cell.marketPriceTxt.text = "market".localized(lang: "ar")   
+            let newStringStrike =   "\(vegetableList[indexPath.row].marketPrice!)"  
+            let attributeString = NSMutableAttributedString(string: newStringStrike)
+            attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
             
-            cell.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            cell.wekalaPriceLBL.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.wekalaPriceLBL.text = "wekalaPrice".localized(lang: "ar") + ":"
-            
-            cell.wekalaPriceTxt.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.wekalaPriceTxt.textAlignment = .right
-            cell.marketPrice.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.marketPriceLBL.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.addToCard.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.termLbl.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.quantity.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.nameLBL.transform  = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.marketPrice.text = "marketPrice".localized(lang: "ar") + ":"
-            cell.marketPriceLBL.textAlignment = .right
-            cell.nameLBL.textAlignment = .right
+            cell.marketPriceLBL.attributedText = attributeString
+           cell.alwekalaLBL.text = "wekala".localized(lang: "ar")
+            cell.wekalaPriceTxt.text =   "\(vegetableList[indexPath.row].wekalaPrice!)"
         }else{
+            cell.marketPriceTxt.text = "market".localized(lang: "en")
+           
+            let newStringStrike =   "\(vegetableList[indexPath.row].marketPrice!)"
+            let attributeString = NSMutableAttributedString(string: newStringStrike)
+            attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
+           
+            cell.marketPriceLBL.attributedText = attributeString
+      
+            cell.containerView.semanticContentAttribute = .forceLeftToRight
+         
+            cell.alwekalaLBL.text = "wekala".localized(lang: "en")
+            cell.wekalaPriceTxt.text =  "\(vegetableList[indexPath.row].wekalaPrice!)"
             
-            cell.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            
-            cell.wekalaPriceLBL.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            
-            
-            cell.wekalaPriceTxt.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            cell.wekalaPriceTxt.textAlignment = .left
-            cell.marketPrice.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            cell.marketPriceLBL.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            cell.addToCard.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            cell.termLbl.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            cell.quantity.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            cell.nameLBL.transform  = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            
-            cell.marketPriceLBL.textAlignment = .left
-            cell.nameLBL.textAlignment = .left
-            
-            cell.wekalaPriceLBL.text = "wekalaPrice".localized(lang: "en")
-            cell.marketPrice.text = "marketPrice".localized(lang: "en")
+           
         }
         if vegetableList[indexPath.row].added == true {
             cell.photo.alpha = CGFloat(0.4)
-            cell.addToCard.backgroundColor = UIColor.red
-            if lang == "ar" {
-                cell.addToCard.setTitle("added".localized(lang: "ar"), for: .normal)
-            }else{
-                cell.addToCard.setTitle("Added", for: .normal)
-            }
-            cell.minusBtn.isEnabled = false
-            cell.plusBtn.isEnabled = false
-            cell.marketPrice.alpha = CGFloat(0.4)
-            cell.marketPriceLBL.alpha = CGFloat(0.4)
-            cell.wekalaPriceLBL.alpha = CGFloat(0.4)
-            cell.wekalaPriceTxt.alpha = CGFloat(0.4)
-            cell.nameLBL.alpha = CGFloat(0.4)
-            cell.termLbl.alpha = CGFloat(0.4)
-            cell.quantity.alpha = CGFloat(0.4)
+           
         }else{
             cell.photo.alpha = 1
-            cell.marketPrice.alpha = 1
-            cell.marketPriceLBL.alpha = 1
-            cell.wekalaPriceLBL.alpha = 1
-            cell.wekalaPriceTxt.alpha = 1
-            cell.termLbl.alpha = 1
-            cell.quantity.alpha = 1
-            cell.nameLBL.alpha = 1
-            cell.addToCard.backgroundColor = UIColor.black
-            if lang == "ar" {
-                cell.addToCard.setTitle("addtoCart".localized(lang: "ar"), for: .normal)
-            }else{
-                cell.addToCard.setTitle("Add to cart", for: .normal)
-            }
-            
-            cell.minusBtn.isEnabled = true
-            cell.plusBtn.isEnabled = true
+
         }
         cell.itemDelegate = self
-        cell.marketPriceLBL.text = "\(vegetableList[indexPath.row].marketPrice!)"
-        cell.wekalaPriceTxt.text = "\(vegetableList[indexPath.row].wekalaPrice!)"
+      
         cell.nameLBL.text = vegetableList[indexPath.row].name
         cell.termLbl.text = vegetableList[indexPath.row].unit
-        cell.photo.sd_setImage(with: URL(string:vegetableList[indexPath.row].image!), placeholderImage: UIImage(named: "Generic_Tomatoes.png"))
+        cell.photo.sd_setImage(with: URL(string:vegetableList[indexPath.row].image!), placeholderImage: UIImage(named: "wekalaLogo.png"))
         cell.quantity.text = "\(vegetableList[indexPath.row].quantity)"
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        return CGSize(width: (view.frame.width - 10), height: 263)
+        return  CGSize(width: (view.frame.width - 4), height: (self.view.frame.width - 10)/3 + 30)
     }
     
 }

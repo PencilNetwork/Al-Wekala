@@ -14,8 +14,16 @@ import FBSDKLoginKit
 import Alamofire
 import FBSDKCoreKit
 class ViewController: UIViewController ,GIDSignInUIDelegate{
-@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var facebookLbl: UILabel!
+    @IBOutlet weak var googleLbl: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet weak var facebookImg: UIImageView!
+    @IBOutlet weak var googleImg: UIImageView!
+    @IBOutlet weak var languageLBL: UILabel!
+    @IBOutlet weak var imageHeight: NSLayoutConstraint!
+    @IBOutlet weak var imageWidth: NSLayoutConstraint!
     @IBOutlet weak var downArrow: UIImageView!
     @IBOutlet weak var cartImg: UIImageView!
     @IBOutlet weak var facebookBtn: UIButton!
@@ -34,27 +42,37 @@ class ViewController: UIViewController ,GIDSignInUIDelegate{
     var flag = false
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        continueBtn.layer.cornerRadius = 10
+        langView.layer.cornerRadius = 10
+        langView.layer.borderWidth = 0.5
+       imageWidth.constant = self.view.frame.width/2
+        imageHeight.constant = self.view.frame.width/2
          GIDSignIn.sharedInstance().uiDelegate = self
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         NotificationCenter.default.addObserver(self, selector: #selector(putImage(_:)), name: NSNotification.Name(rawValue: "putName"), object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(deleteActivityIndicator(_:)), name: NSNotification.Name(rawValue: "deleteActivityIndi"), object: nil)
-        facebookBtn.layer.cornerRadius = 10
-        googleBtn.layer.cornerRadius = 10
+//        facebookBtn.layer.cornerRadius = 10
+//        googleBtn.layer.cornerRadius = 10
          UserDefaults.standard.set("en", forKey: "lang")
-        
+        languageLBL.textAlignment = .left
         UserDefaults.standard.set(false,forKey: "logout")
         
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        languageBtn.layer.cornerRadius = 20
+        facebookBtn.layer.cornerRadius = 25
+        googleBtn.layer.cornerRadius = 25
         let lang =  UserDefaults.standard.value(forKey: "lang") as! String
         if lang == "ar"{
-            
+//            googleLbl.textAlignment = .right
+//            facebookLbl.textAlignment = .right
         }else{
             contentView.semanticContentAttribute = .forceLeftToRight
+//            googleLbl.textAlignment = .left
+//            facebookLbl.textAlignment = .left
         }
         if flag == true {
             self.continueBtn.isHidden = true
@@ -88,10 +106,12 @@ class ViewController: UIViewController ,GIDSignInUIDelegate{
         continueBtn.isHidden = false
             self.cartImg.isHidden = true
         languageBtn.isHidden = true
+        languageLBL.isHidden = true
          self.downArrow.isHidden = true
-        
-       
-       
+        facebookImg.isHidden = true
+        googleImg.isHidden = true
+       googleLbl.isHidden = true
+       facebookLbl.isHidden = true
         self.activityIndicator.isHidden = true
         self.activityIndicator.stopAnimating()
         if let dict = notification.userInfo as NSDictionary? {
@@ -118,23 +138,35 @@ class ViewController: UIViewController ,GIDSignInUIDelegate{
     
     @IBAction func englishBtnAction(_ sender: Any) {
         langView.isHidden =  true
+//        googleLbl.textAlignment = .left
+//        facebookLbl.textAlignment = .left
         contentView.semanticContentAttribute = .forceLeftToRight
         languageBtn.contentHorizontalAlignment = .left
-        languageBtn.setTitle("English", for: .normal)
+//        languageBtn.setTitle("English", for: .normal)
+        languageLBL.text = "English"
+        languageLBL.textAlignment = .left
         UserDefaults.standard.set("en", forKey: "lang")
-         facebookBtn.setTitle("Log in Facebook", for: .normal)
-        googleBtn.setTitle("Log in Google", for: .normal)
+        // facebookBtn.setTitle("Login with Facebook", for: .normal)
+        facebookLbl.text = "Login with Facebook"
+        googleLbl.text = "Login with Google"
+//        googleBtn.setTitle("Login with Google", for: .normal)
           continueBtn.setTitle("Continue", for: .normal)
     }
     
     @IBAction func arabicBtnAction(_ sender: Any) {
         langView.isHidden = true
+//        googleLbl.textAlignment = .right
+//        facebookLbl.textAlignment = .right
         languageBtn.contentHorizontalAlignment = .right
         contentView.semanticContentAttribute = .forceRightToLeft
-        languageBtn.setTitle("Arabic", for: .normal)
+        //languageBtn.setTitle("Arabic", for: .normal)
+        languageLBL.text = "Arabic"
+        languageLBL.textAlignment = .right
         UserDefaults.standard.set("ar", forKey: "lang")
-        facebookBtn.setTitle("تسجيل الدخول facebook", for: .normal)
-        googleBtn.setTitle("تسجيل الدخول google", for: .normal)
+        //facebookBtn.setTitle(" تسجيل الدخول ب Facebook", for: .normal)
+        facebookLbl.text = "تسجيل الدخول بالفيسبوك"
+         googleLbl.text = "تسجيل الدخول بجوجل "
+        //googleBtn.setTitle(" ب تسجيل الدخول google", for: .normal)
        continueBtn.setTitle("استمر", for: .normal)
     }
 
@@ -191,6 +223,10 @@ class ViewController: UIViewController ,GIDSignInUIDelegate{
                         self.nameView.isHidden = false
                          self.languageBtn.isHidden = true
                         self.downArrow.isHidden = true
+                        self.facebookImg.isHidden = true
+                        self.googleImg.isHidden = true
+                        self.googleLbl.isHidden = true
+                        self.facebookLbl.isHidden = true
                         self.profileImg.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "profile.jpg"))
                         
                         

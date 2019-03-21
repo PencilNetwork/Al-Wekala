@@ -14,7 +14,8 @@ class ResultOrderViewController: UIViewController {
     @IBOutlet weak var backToHomeBtn: UIButton!
     @IBOutlet weak var contentView: UIView!
     
-    @IBOutlet weak var yourorderId: UILabel!
+    @IBOutlet weak var orderDetail: UILabel!
+    
     
     @IBOutlet weak var orderIdLBL: UILabel!
     
@@ -25,16 +26,20 @@ class ResultOrderViewController: UIViewController {
       var cartData :CartData?
     override func viewDidLoad() {
         super.viewDidLoad()
-        backToHomeBtn.layer.cornerRadius = 10
+        backToHomeBtn.layer.cornerRadius = 25
            if lang == "ar" {
+            orderDetail.text = "تفاصيل الطلب"
+            orderDetail.textAlignment = .right
             succefullyCreatedLBL.text = "orderIsCreated".localized(lang: "ar")
-            yourorderId.text = "yourOrder".localized(lang: "ar")
+           orderIdLBL.text = "yourOrder".localized(lang: "ar")  + "\(orderId!)"
             itWillBedeliveredLBL.text = "itWillDelivered".localized(lang: "ar") + " " +  (cartData?.time!)!
             backToHomeBtn.setTitle("backToHome".localized(lang: "ar"), for: .normal)
            }else{
+            orderDetail.textAlignment = .left
+            orderIdLBL.text = "your Order ID is :" + "\(orderId!)"
               itWillBedeliveredLBL.text = "it will be delivered" + " " +  (cartData?.time!)!
            }
-        orderIdLBL.text = "\(orderId!)"
+        
         
         // Do any additional setup after loading the view.
     }

@@ -23,20 +23,22 @@ class TimeViewController: UIViewController {
     var nightTime  = ""
     var dayTime = ""
     var cartData :CartData?
-    
+    var comparedString = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         okBtn.layer.cornerRadius  = 10
        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         let lang = UserDefaults.standard.value(forKey: "lang") as! String
         if lang == "ar" {
-            setTime.text = "اختار وقت"
+            setTime.text = " اختيار وقت التوصيل"
             contentView.semanticContentAttribute = .forceRightToLeft
             setTime.textAlignment = .right
             dayLabel.textAlignment = .right
             nightLabel.textAlignment = .right
+            okBtn.setTitle("ok".localized(lang: "ar"), for: .normal)
         }
          let time = Date()
+        print("time\(time)")
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         formatter.locale = NSLocale.init(localeIdentifier: "en") as Locale
@@ -61,8 +63,8 @@ class TimeViewController: UIViewController {
             }else{
                 dayformatter.locale = NSLocale(localeIdentifier: "en") as Locale?
                 date = dayformatter.string(from: Date().tomorrow)
-                dayLabel.text = "day from 12pm -> 3 pm \(date)"
-                nightLabel.text = "night from 6 pm -> 9 pm  \(date)"
+                dayLabel.text = "day from 12pm to 3 pm \(date)"
+                nightLabel.text = "night from 6 pm to 9 pm  \(date)"
             }
            
         }
@@ -80,8 +82,8 @@ class TimeViewController: UIViewController {
               }else{
                 dayformatter.locale = NSLocale(localeIdentifier: "en") as Locale?
                 date = dayformatter.string(from: Date())
-                dayLabel.text = "day from 12 pm -> 3 pm \(date)"
-                nightLabel.text = "night from 6pm -> 9 pm  \(date)"
+                dayLabel.text = "day from 12 pm to 3 pm \(date)"
+                nightLabel.text = "night from 6pm to 9 pm  \(date)"
             }
           
         }
@@ -99,8 +101,8 @@ class TimeViewController: UIViewController {
             }else{
                 dayformatter.locale = NSLocale(localeIdentifier: "en") as Locale?
                 date = dayformatter.string(from: Date())
-                dayLabel.text = "day from 12 pm -> 3 pm \(date)"
-                nightLabel.text = "night from 6 pm -> 9 pm  \(date)"
+                dayLabel.text = "day from 12 pm to 3 pm \(date)"
+                nightLabel.text = "night from 6 pm to 9 pm  \(date)"
             }
             
         }
@@ -120,16 +122,29 @@ class TimeViewController: UIViewController {
            }else{
             dayformatter.locale = NSLocale(localeIdentifier: "en") as Locale?
             date = dayformatter.string(from: Date())
-            nightLabel.text = "night from 6 pm -> 9 pm \(date)"
+            nightLabel.text = "night from 6 pm to 9 pm \(date)"
             print("night same\(Date())")
             date = dayformatter.string(from: Date().tomorrow)
             print("day +1day\(Date().tomorrow)")
-            dayLabel.text = "day from 12 pm -> 3 pm \(date)"
+            dayLabel.text = "day from 12 pm to 3 pm \(date)"
             }
+            
+            
+        
         }
       
 
-        
+        let currentTimenew = Date()
+        let newFormatter = DateFormatter()
+        newFormatter.dateFormat = "dd-MM-yyyy HH:mm"
+        let theNewDate = newFormatter.string(from: currentTimenew)
+        print(theNewDate)
+        var id = ""
+        if let data = UserDefaults.standard.data(forKey: "person"){
+            let person = NSKeyedUnarchiver.unarchiveObject(with: data) as? Person
+            id = (person?.id)!
+        }
+        comparedString = id + theNewDate
         
         
         
@@ -213,6 +228,7 @@ class TimeViewController: UIViewController {
              self.view.removeFromSuperview()
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "LocationViewController") as! LocationViewController
             vc.cartData = cartData
+            vc.comparedString = comparedString
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
                let lang = UserDefaults.standard.value(forKey: "lang") as! String

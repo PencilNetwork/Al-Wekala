@@ -11,5 +11,6 @@ class RegionBean{
     var id:Int?
     var name:String?
     var deliveryfees:Double?
-   
+    var arName:String?
+    var enName:String?
 }

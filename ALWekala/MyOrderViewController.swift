@@ -10,12 +10,14 @@ import UIKit
 import Alamofire
 class MyOrderViewController: UIViewController {
     @IBOutlet weak var orderTableView: UITableView!
-    
+     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var orderList :[Myorder] = []
     let lang = UserDefaults.standard.value(forKey: "lang") as! String
     var parentView:UIView?
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.isHidden = true
+        activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
             NotificationCenter.default.addObserver(self, selector: #selector(myOrder(_:)), name: NSNotification.Name(rawValue: "MyOrder"), object: nil)
         orderTableView.delegate = self
         orderTableView.dataSource = self
@@ -42,14 +44,18 @@ class MyOrderViewController: UIViewController {
             getData()
         }else{
             
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            networkNotExist()
         }
     }
     func convertDateFormate(input:String,form:String)-> String {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar" {
+            inputFormatter.locale = NSLocale(localeIdentifier: "ar") as Locale?
+        }else{
+            inputFormatter.locale = NSLocale(localeIdentifier: "en") as Locale?
+        }
         let showDate = inputFormatter.date(from: input)
         inputFormatter.dateFormat = form
         let resultString = inputFormatter.string(from: showDate!)
@@ -67,6 +73,8 @@ class MyOrderViewController: UIViewController {
     */
     func getData(){
         orderList  = []
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         let url = Constant.baseUrl + Constant.myOrder
         print(url)
            let lang =  UserDefaults.standard.value(forKey: "lang") as! String
@@ -82,6 +90,8 @@ class MyOrderViewController: UIViewController {
         Alamofire.request(url, method:.post, parameters: parameter,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
                 switch response.result {
                 case .success:
                     if let datares = response.result.value as? [[String:Any]]{
@@ -102,8 +112,8 @@ class MyOrderViewController: UIViewController {
                             if let address = item["address"] as? String {
                                 myorder.address = address
                             }
-                            if let regoin = item["regoin"] as? String {
-                                myorder.regoin = regoin
+                            if let regoin = item["regoin"] as? [String:Any] {
+                                print("region\(regoin)")
                             }
                             if let delevery_fees = item["delevery_fees"] as? Double {
                                 myorder.delevery_fees = delevery_fees
@@ -155,7 +165,7 @@ class MyOrderViewController: UIViewController {
                                         if let unit = element["unit_en"] as? String{
                                             veg.unit = unit
                                         }
-                                        if let name = element["name_en"] as? String{
+                                        if let name = element["name"] as? String{
                                             veg.name = name
                                         }
                                     }
@@ -177,7 +187,13 @@ class MyOrderViewController: UIViewController {
                 case .failure(let error):
                     print(error)
                     
+                    
                     let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "retry", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
+                        print("Handle Ok logic here")
+                        self.getData()
+                    }))
+                    
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                     
@@ -199,12 +215,15 @@ extension MyOrderViewController :UITableViewDelegate,UITableViewDataSource {
 //        self.view.addSubview(popupVC.view)
         let customAlert = self.storyboard?.instantiateViewController(withIdentifier: "MyOrderDetailViewController") as! MyOrderDetailViewController
         customAlert.item = orderList[indexPath.row]
-        customAlert.providesPresentationContextTransitionStyle = true
-        customAlert.definesPresentationContext = true
-        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
-
-        self.present(customAlert, animated: true, completion: nil)
+        self.addChildViewController(customAlert)
+        customAlert.view.frame = self.view.frame
+        self.view.addSubview(customAlert.view)
+//        customAlert.providesPresentationContextTransitionStyle = true
+//        customAlert.definesPresentationContext = true
+//        customAlert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+//        customAlert.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+//
+//        self.present(customAlert, animated: true, completion: nil)
 //        let vc = self.storyboard?.instantiateViewController(withIdentifier:"MyOrderDetailViewController") as! MyOrderDetailViewController
 //        vc.item = orderList[indexPath.row]
 //        vc.modalPresentationStyle = .overFullScreen
@@ -212,29 +231,37 @@ extension MyOrderViewController :UITableViewDelegate,UITableViewDataSource {
 //        self.present(vc, animated: true, completion: nil)
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyorderTableViewCell", for: indexPath) as! MyorderTableViewCell
+        cell.containerView.layer.cornerRadius = 10
         let lang = UserDefaults.standard.value(forKey: "lang") as! String
          if lang == "ar" {
             cell.containerView .semanticContentAttribute = .forceRightToLeft
-            cell.orderId.text = "orderId".localized(lang: "ar")
+            cell.containerView.layer.borderWidth = 4
+            cell.containerView.layer.borderColor = UIColor(red:201/255, green: 201/255, blue: 201/255, alpha: 1).cgColor
+            
+            cell.orderNumber.text =  "orderId".localized(lang: "ar") + ":" + "\(orderList[indexPath.row].id!)"
             cell.timeLBl.text = "time".localized(lang: "ar") + ":"
             cell.dateLbl.text = "date".localized(lang: "ar") + ":"
-            cell.totalLbl.text = "total".localized(lang: "ar") + ":"
+            cell.totalLbl.text = "total".localized(lang: "ar") + ": "
             cell.time.textAlignment = .right
             cell.date.textAlignment = .right
             cell.total.textAlignment = .right
-            
+            cell.status.textAlignment = .right
+              cell.orderNumber.textAlignment = .right
          }else{
             cell.containerView .semanticContentAttribute = .forceLeftToRight
-            cell.orderId.text = "Order Id:"
+           cell.orderNumber.textAlignment = .left
+            cell.orderNumber.text =  "Order Id: " + "\(orderList[indexPath.row].id!)"
             cell.timeLBl.text = "Time:"
             cell.dateLbl.text = "Date:"
              cell.totalLbl.text = "Total:"
             cell.time.textAlignment = .left
             cell.date.textAlignment = .left
             cell.total.textAlignment = .left
+            cell.status.textAlignment = .left
         }
-        cell.orderNumber.text = "\(orderList[indexPath.row].id!)"
+        
         cell.total.text =  "\(orderList[indexPath.row].total!)"
         cell.date.text =  convertDateFormate(input: orderList[indexPath.row].created_at!, form: "dd-MM-yyyy")
         cell.time.text = convertDateFormate(input:orderList[indexPath.row].created_at!,form: "hh:mm a")
@@ -253,17 +280,17 @@ extension MyOrderViewController :UITableViewDelegate,UITableViewDataSource {
             if orderList[indexPath.row].status! ==  "0"{
                 status = "Pending"
             }else if orderList[indexPath.row].status! ==  "1" {
-                status = "sent"
+                status = "sent to delivery"
             }else  if orderList[indexPath.row].status! ==  "2" {
                 status = "deliverd"
             }else{
-                status = "cancelled"
+                status = "canceled"
             }
         }
         if lang == "ar" {
-            cell.status.text = "status".localized(lang: "ar") + ":" + status
+            cell.status.text = "status".localized(lang: "ar") + ": " + status
         }else{
-            cell.status.text = "Status:" + status
+            cell.status.text = "Status: " + status
         }
         cell.containerView.layer.borderWidth = 0.5
         return cell

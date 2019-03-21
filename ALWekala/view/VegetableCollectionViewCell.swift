@@ -10,13 +10,22 @@ import UIKit
 
 class VegetableCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var alwekalaLBL: UILabel!
+    @IBOutlet weak var marketPriceTxtWidth: NSLayoutConstraint!
+    @IBOutlet weak var marketPriceTxt: UILabel!
+    @IBOutlet weak var addtoCardWidth: NSLayoutConstraint!
+    @IBOutlet weak var lineView: UIView!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var imgHeight: NSLayoutConstraint!
+    @IBOutlet weak var imgWidth: NSLayoutConstraint!
     @IBOutlet weak var plusBtn: UIButton!
     @IBOutlet weak var minusBtn: UIButton!
     @IBOutlet weak var addToCard: UIButton!
     @IBOutlet weak var marketPriceLBL: UILabel!
-    @IBOutlet weak var marketPrice: UILabel!
+    
     @IBOutlet weak var wekalaPriceTxt: UILabel!
-    @IBOutlet weak var wekalaPriceLBL: UILabel!
+    
+   
     @IBOutlet weak var quantity: UILabel!
     @IBOutlet weak var termLbl: UILabel!
     @IBOutlet weak var nameLBL: UILabel!

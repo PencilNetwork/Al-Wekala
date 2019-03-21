@@ -19,7 +19,7 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
          topImageHeight.constant = 0
-        heightImageConstraint.constant = self.view.frame.height * 0.2
+        heightImageConstraint.constant = 0.7 * self.view.frame.width //self.view.frame.height * 0.2
         vegWidthImgConstraint.constant = 0.7 * self.view.frame.width
             self.navigationController?.isNavigationBarHidden = true
        

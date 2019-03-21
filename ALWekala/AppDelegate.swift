@@ -14,6 +14,7 @@ import GoogleMaps
 import GooglePlaces
 import GoogleSignIn
 import FBSDKLoginKit
+import IQKeyboardManagerSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate ,GIDSignInDelegate{
 
@@ -21,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate ,GIDSignInDelegate{
    static var userMenu_bool = true
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        IQKeyboardManager.shared.enable = true
      //
         GMSServices.provideAPIKey("AIzaSyDG6OfRLYA05qEQz-Wnoey523EXMLEdUJg")
         GMSPlacesClient.provideAPIKey("AIzaSyDG6OfRLYA05qEQz-Wnoey523EXMLEdUJg")

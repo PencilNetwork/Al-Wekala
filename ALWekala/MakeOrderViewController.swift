@@ -8,6 +8,7 @@
 
 protocol SendCardDelegate{
     func sendItemToCart(Item:Food,flag:Bool)
+    func updateItemInCart(ItemId:Int,Quantity:Int)
     func refreshControlData()
  //   func sendFood(food:[Food])
 }
@@ -20,13 +21,20 @@ import UIKit
 import CoreData
 import Alamofire
 class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
-
+    
+    @IBOutlet weak var bottomHeight: NSLayoutConstraint!
+    @IBOutlet weak var productLbL: UILabel!
+    
+    @IBOutlet weak var quantityLbl: UILabel!
+    @IBOutlet weak var priceLbl: UILabel!
+    @IBOutlet weak var pageTitleLBL: UILabel!
+    @IBOutlet weak var languageLbl: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var myProfileView: UIView!
     @IBOutlet weak var myOrderView: UIView!
     @IBOutlet weak var langView: UIView!
     @IBOutlet weak var itemView: UIView!
-    @IBOutlet weak var yourCartLBL: UILabel!
+    
     @IBOutlet weak var checkOutbtn: UIButton!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var nightTimeLbl: UILabel!
@@ -55,7 +63,23 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        langView.layer.cornerRadius = 10
+        langView.layer.borderWidth = 0.5
+        totalLbl.layer.cornerRadius = 12
+        totalLbl.clipsToBounds = true
+        bottomView.layer.cornerRadius = 10
+        let font = UIFont.systemFont(ofSize: 20)
+        segmentControl.setTitleTextAttributes([NSAttributedStringKey.font: font],
+                                              for: .normal)
+        segmentControl.setTitleTextAttributes([NSAttributedStringKey.font: font],
+                                              for: .selected)
+        let titleTextAttributes = [NSAttributedStringKey.font:font,NSAttributedStringKey.foregroundColor: UIColor(red:242/255, green: 122/255, blue: 28/255, alpha: 1)]
+        let titleTextAttribute = [NSAttributedStringKey.font:font,NSAttributedStringKey.foregroundColor: UIColor.gray]
+            
+            segmentControl.setTitleTextAttributes(titleTextAttribute, for: .normal)
+        segmentControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
+        
+       languageBtn.layer.cornerRadius = 15
         print( UIDevice.current.identifierForVendor?.uuidString)
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
@@ -68,13 +92,21 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         self.view.addGestureRecognizer(swipeRight)
         self.view.addGestureRecognizer(swipeLeft)
         
-        checkOutbtn.layer.cornerRadius = 10
+        checkOutbtn.layer.cornerRadius = 15
         tableView.delegate = self
         tableView.dataSource = self
         self.tableView.separatorStyle = .none
+        
       //  fruitView.semanticContentAttribute = .forceLeftToRight
         let lang = UserDefaults.standard.value(forKey: "lang") as! String
         if lang == "ar" {
+            topView.semanticContentAttribute = .forceRightToLeft
+            productLbL.text = "product".localized(lang: "ar")
+            productLbL.textAlignment  = .right
+            priceLbl.text = "price".localized(lang: "ar")
+            quantityLbl.text = "quantity".localized(lang: "ar")
+            pageTitleLBL.text = "makeOrder".localized(lang: "ar")
+            pageTitleLBL.textAlignment = .right
             segmentControl.setTitle("vegetable".localized(lang: "ar"), forSegmentAt: 0)
             segmentControl.setTitle("fruits".localized(lang: "ar"), forSegmentAt: 1)
             dayDeliveryLbl.text = "dayDelivery".localized(lang: "ar")
@@ -82,7 +114,8 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             nightTimeLbl.text = "timenight".localized(lang: "ar")
             dayTimeLbl.text = "timeMorning".localized(lang: "ar")
             checkOutbtn.setTitle("checkout".localized(lang: "ar"), for: .normal)
-            yourCartLBL.text = "yourCart".localized(lang: "ar")
+            //yourCartLBL.text = "yourCart".localized(lang: "ar")
+           
             bottomView.semanticContentAttribute = .forceRightToLeft
            tableView.semanticContentAttribute = .forceRightToLeft
             MiddleView.semanticContentAttribute = .forceRightToLeft
@@ -93,16 +126,24 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
          //   topView.semanticContentAttribute = .forceRightToLeft
        //     languageBtn.contentHorizontalAlignment = .right
         //     langView.semanticContentAttribute = .forceRightToLeft
-          
+          languageLbl.textAlignment = .right
         }else{
+            productLbL.text = "PRODUCT"
+              productLbL.textAlignment  = .left
+            priceLbl.text = "PRICE"
+            quantityLbl.text = "QUANTITY"
+            languageLbl.textAlignment = .left
+            pageTitleLBL.text = "Make Order"
+             pageTitleLBL.textAlignment = .left
             MiddleView.semanticContentAttribute = .forceLeftToRight
-            //topView.semanticContentAttribute = .forceLeftToRight
+            topView.semanticContentAttribute = .forceLeftToRight
             bottomView.semanticContentAttribute = .forceLeftToRight
             tableView.semanticContentAttribute = .forceLeftToRight
             nightTimeLbl.textAlignment = .left
             dayTimeLbl.textAlignment = .left
             dayDeliveryLbl.textAlignment = .left
             nightDeliveryLbl.textAlignment = .left
+           
             // languageBtn.contentHorizontalAlignment = .left
            // langView.semanticContentAttribute = .forceLeftToRight
         }
@@ -120,9 +161,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             getData()
         }else{
             
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+           networkNotExist()
         }
         // Do any additional setup after loading the view.
     }
@@ -160,11 +199,30 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             getData()
         }else{
             
-            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            networkNotExist()
         }
     }
+    func updateItemInCart(ItemId: Int, Quantity: Int) {// call when change value from original liast
+        for item in cartList{
+            if item.id == ItemId{
+                item.quantity = Quantity
+                updateDatabase(Id:ItemId,Quantity:Quantity)
+                 tableView.reloadData()
+            }
+        }
+        var sum  = 0.0
+        for i in cartList {
+            sum = sum + Double(i.quantity) * i.wekalaPrice!
+        }
+        let lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar" {
+            totalLbl.text = "مجموع:\(sum)"
+        }else{
+            totalLbl.text = "total:\(sum)"
+        }
+        
+    }
+    
     func plusToCart(index:Int){
         cartList[index].quantity = cartList[index].quantity + 1
         updateDatabase(Id:cartList[index].id!,Quantity:cartList[index].quantity)
@@ -179,7 +237,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         }else{
             totalLbl.text = "total:\(sum)"
         }
-        if cartList[index].category == "fruites"
+        if cartList[index].category == "fruites" ||  cartList[index].category == "فواكه"
         {
             let imageDataDict:[String: Any] = ["quantity": cartList[index].quantity ,"id": cartList[index].id!]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updatecartfruites"), object: nil, userInfo: imageDataDict)
@@ -204,7 +262,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         }else{
             totalLbl.text = "total:\(sum)"
         }
-        if cartList[index].category == "fruites"
+        if cartList[index].category == "fruites" ||  cartList[index].category == "فواكه"
         {
             let imageDataDict:[String: Any] = ["quantity": cartList[index].quantity ,"id": cartList[index].id!]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updatecartfruites"), object: nil, userInfo: imageDataDict)
@@ -213,6 +271,8 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updatecart"), object: nil, userInfo: imageDataDict)
         }
             
+        }else if cartList[index].quantity == 1{ // it become zero remove from cart
+            deleteFromCart(index:index)
         }
     }
     func sendFood(){
@@ -227,6 +287,13 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             }
         }
         tableView.reloadData()
+        if cartList.count == 0 {
+            bottomView.isHidden = true
+            bottomHeight.constant = 0
+        }else{
+            bottomView.isHidden = false
+            bottomHeight.constant =  120
+        }
         var sum  = 0.0
         for i in cartList {
             sum = sum + Double(i.quantity) * i.wekalaPrice!
@@ -241,6 +308,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     }
     func deleteFromCart(index:Int){
          removeFromDatabase(id:cartList[index].id!)
+        
         let imageDataDict:[String: Any] = ["id": cartList[index].id!]
         if cartList[index].category == "fruites" ||  cartList[index].category == "فواكه"
         {
@@ -251,6 +319,10 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteCart"), object: nil, userInfo: imageDataDict)
         }
         cartList.remove(at: index)
+        if cartList.count == 0{
+            bottomView.isHidden = true
+             bottomHeight.constant = 0
+        }
         tableView.reloadData()
         var sum  = 0.0
         for i in cartList {
@@ -369,9 +441,7 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
                 case .failure(let error):
                     print(error)
                     
-                    let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                    self.networkFail()
                     
                 }
         }
@@ -454,6 +524,10 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     func sendItemToCart(Item:Food,flag:Bool){
         if flag == true {
             cartList.append(Item)
+            if cartList.count >= 1{
+                bottomView.isHidden = false
+                 bottomHeight.constant = 120
+            }
             //add to database
             var context  : NSManagedObjectContext?
             if #available(iOS 10.0, *) {
@@ -498,6 +572,10 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
             }
             if index != -1 {
                 cartList.remove(at: index)
+            }
+            if cartList.count == 0 {
+                bottomView.isHidden = true
+                 bottomHeight.constant = 0
             }
             //remove from database
              removeFromDatabase(id:Item.id!)
@@ -583,8 +661,23 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     @IBAction func arabicBtnAction(_ sender: Any) {
       //  cartList = []
        //    foodList = []
+        productLbL.text = "product".localized(lang: "ar")
+        priceLbl.text = "price".localized(lang: "ar")
+        quantityLbl.text = "quantity".localized(lang: "ar")
+         productLbL.textAlignment  = .right
+        if tab == 0{
+             pageTitleLBL.text = "makeOrder".localized(lang: "ar")
+        }else if tab == 1{
+            pageTitleLBL.text = "myProfile".localized(lang: "ar")
+        }else {
+            pageTitleLBL.text = "myOrder".localized(lang: "ar")
+        }
+        pageTitleLBL.textAlignment = .right
+         languageLbl.text = "Arabic"
+          pageTitleLBL.textAlignment = .right
+          languageLbl.textAlignment = .right
         MiddleView.semanticContentAttribute = .forceRightToLeft
-     //   topView.semanticContentAttribute = .forceRightToLeft
+        topView.semanticContentAttribute = .forceRightToLeft
      //   languageBtn.contentHorizontalAlignment = .right
        //  langView.semanticContentAttribute = .forceLeftToRight
         nightTimeLbl.textAlignment = .right
@@ -600,7 +693,8 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         nightTimeLbl.text = "timenight".localized(lang: "ar")
         dayTimeLbl.text = "timeMorning".localized(lang: "ar")
         checkOutbtn.setTitle("checkout".localized(lang: "ar"), for: .normal)
-        yourCartLBL.text = "yourCart".localized(lang: "ar")
+       // yourCartLBL.text = "yourCart".localized(lang: "ar")
+       
         bottomView.semanticContentAttribute = .forceRightToLeft
              tableView.semanticContentAttribute = .forceRightToLeft
            // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshLang"), object: nil, userInfo: nil)
@@ -618,12 +712,26 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
     @IBAction func englishBtnAction(_ sender: Any) {
      //   cartList = []
       //  foodList = []
+        if tab == 0{
+            pageTitleLBL.text =  "Make Order"
+        }else if tab == 1{
+            pageTitleLBL.text =  "My Profile"
+        }else {
+            pageTitleLBL.text =  "My Orders"
+        }
+         productLbL.textAlignment = .left
+        productLbL.text = "PRODUCT"
+        priceLbl.text = "PRICE"
+        quantityLbl.text = "QUANTITY"
+        pageTitleLBL.textAlignment = .left
+        languageLbl.text = "English"
+          languageLbl.textAlignment = .left
         nightTimeLbl.textAlignment = .left
         dayTimeLbl.textAlignment = .left
         dayDeliveryLbl.textAlignment = .left
         nightDeliveryLbl.textAlignment = .left
         MiddleView.semanticContentAttribute = .forceLeftToRight
-    //    topView.semanticContentAttribute = .forceLeftToRight
+        topView.semanticContentAttribute = .forceLeftToRight
         bottomView.semanticContentAttribute = .forceLeftToRight
   //      langView.semanticContentAttribute = .forceLeftToRight
          langView.isHidden = true
@@ -635,7 +743,8 @@ class MakeOrderViewController: UIViewController ,SendCardDelegate,CartAction{
         nightTimeLbl.text = "timenight".localized(lang: "en")
         dayTimeLbl.text = "timeMorning".localized(lang: "en")
         checkOutbtn.setTitle("checkout".localized(lang: "en"), for: .normal)
-        yourCartLBL.text = "yourCart".localized(lang: "en")
+       
+        
         bottomView.semanticContentAttribute = .forceLeftToRight
              tableView.semanticContentAttribute = .forceLeftToRight
        //  itemView.semanticContentAttribute = .forceLeftToRight
@@ -709,6 +818,7 @@ extension MakeOrderViewController : UITableViewDelegate,UITableViewDataSource{
             cell.name.textAlignment =  .left
              cell.contentView.semanticContentAttribute =  .forceLeftToRight
         }
+       
         cell.index = indexPath.row
         cell.cartAction = self 
         cell.name.text = cartList[indexPath.row].name!
@@ -790,9 +900,9 @@ extension MakeOrderViewController :menuDelegate{
             print("Home")
             let lang = UserDefaults.standard.value(forKey: "lang") as! String
             if lang == "ar" {
-                self.navigationItem.title = "home".localized(lang: "ar")
+                  pageTitleLBL.text = "makeOrder".localized(lang: "ar")
             }else{
-                self.navigationItem.title = "Home"
+               pageTitleLBL.text = "Make Order"
             }
           myOrderView.isHidden =  true
             tab = 0
@@ -803,9 +913,10 @@ extension MakeOrderViewController :menuDelegate{
         case 1:
             print("my profile")
             if lang == "ar" {
-                self.navigationItem.title = "confirmOrder".localized(lang: "ar")
+                pageTitleLBL.text = "myProfile".localized(lang: "ar")
+               
             }else{
-                self.navigationItem.title = "Confirm Order"
+              pageTitleLBL.text = "My Profile"
             }
             tab = 1
             myOrderView.isHidden = true
@@ -815,9 +926,9 @@ extension MakeOrderViewController :menuDelegate{
             print("myorder")
             tab = 2
             if lang == "ar" {
-                self.navigationItem.title = "cancelOrder".localized(lang: "ar")
+               pageTitleLBL.text = "myOrder".localized(lang: "ar")
             }else{
-                self.navigationItem.title = "Cancel Order"
+                 pageTitleLBL.text = "My Orders"
             }
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "MyOrder"), object: nil, userInfo: nil)
             myOrderView.isHidden = false

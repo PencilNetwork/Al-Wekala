@@ -40,6 +40,7 @@ class LocationViewController: UIViewController ,MapDelegate{
     var address:String?
     var cartData :CartData?
       let lang = UserDefaults.standard.value(forKey: "lang") as! String
+    var comparedString = ""
     override func viewDidLoad() {
         super.viewDidLoad()
          defaultCheckBox.setImage(UIImage(named: "radioGreen.png"), for: .normal)
@@ -49,8 +50,8 @@ class LocationViewController: UIViewController ,MapDelegate{
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = UIColor.black
           self.navigationController?.navigationBar.backItem?.title = ""
-        confirmBtn.layer.cornerRadius = 10
-        setYourLocationBtn.layer.cornerRadius = 10
+        confirmBtn.layer.cornerRadius = 20
+        setYourLocationBtn.layer.cornerRadius = 25
         if lang == "ar" {
               contentView.semanticContentAttribute = .forceRightToLeft
             defaultLabel.textAlignment = .right
@@ -59,7 +60,7 @@ class LocationViewController: UIViewController ,MapDelegate{
              regionBtn.setTitle("region".localized(lang: "ar"), for: .normal)
              flatNumberTxt.placeholder = "flatNumber".localized(lang: "ar")
              landscapeTxt.placeholder = "landscape".localized(lang: "ar")
-            setYourLocationBtn.setTitle("اختار موقعك الجديد", for: .normal)
+            setYourLocationBtn.setTitle("اختر موقعك الجديد", for: .normal)
             createAddressLBL.text = "createNewAddress".localized(lang: "ar")
             confirmBtn.setTitle("confirm".localized(lang: "ar"), for: .normal)
             defaultLabel.text = "defaultAddress".localized(lang: "ar")
@@ -68,7 +69,20 @@ class LocationViewController: UIViewController ,MapDelegate{
             defaultRegion.textAlignment = .right
             landscapeTxt.textAlignment = .right
             defaultFlatLBL.textAlignment = .right
-            }
+            defaultAddressLbl.textAlignment = .right
+            selectedAddressLbl.textAlignment = .right
+        }else{
+            contentView.semanticContentAttribute = .forceLeftToRight
+             selectedAddressLbl.textAlignment = .left
+             flatNumberTxt.textAlignment = .left
+             landscapeTxt.textAlignment = .left
+             defaultRegion.textAlignment = .left
+            defaultAddressLbl.textAlignment = .left
+            defaultFlatLBL.textAlignment = .left
+            regionBtn.contentHorizontalAlignment = .left
+            defaultLabel.textAlignment = .left
+            createAddressLBL.textAlignment = .left
+        }
         if let data = UserDefaults.standard.data(forKey: "person"){
             let person = NSKeyedUnarchiver.unarchiveObject(with: data) as? Person
             print("ewrw person\(person?.name)")
@@ -76,10 +90,10 @@ class LocationViewController: UIViewController ,MapDelegate{
             
             if lang == "ar" {
                 defaultFlatLBL.text = "رقم الشقة:" + " \((person?.flat_number)!)"
-                defaultRegion.text = "المنطقة: " + (person?.regoin)!
+              //  defaultRegion.text = "المنطقة: " + (person?.regoin)!
             }else{
                defaultFlatLBL.text = "Flat Number: \((person?.flat_number)!)"
-                defaultRegion.text = "Region: " + (person?.regoin)!
+              //  defaultRegion.text = "Region: " + (person?.regoin)!
             }
            
         }
@@ -98,8 +112,20 @@ class LocationViewController: UIViewController ,MapDelegate{
        flatNumberTxt.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
         landscapeTxt.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: UIControlEvents.editingChanged)
         // Do any additional setup after loading the view.
+        txtStyle(txtfield:landscapeTxt)
+        txtStyle(txtfield:flatNumberTxt)
+        regionBtn.layer.cornerRadius = 25
+        regionBtn.clipsToBounds = true
+        regionBtn.layer.borderWidth = 1
+        regionBtn.layer.borderColor = UIColor(red:201/255, green: 201/255, blue: 201/255, alpha: 1).cgColor
     }
-
+    func txtStyle(txtfield:UITextField){
+        txtfield.layer.cornerRadius = 25
+        txtfield.clipsToBounds = true
+        txtfield.layer.borderWidth = 1
+        txtfield.layer.borderColor = UIColor(red:201/255, green: 201/255, blue: 201/255, alpha: 1).cgColor
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -134,9 +160,9 @@ class LocationViewController: UIViewController ,MapDelegate{
                             defaultRegion.id = -1
                             let lang = UserDefaults.standard.value(forKey: "lang") as! String
                             if lang == "ar" {
-                                defaultRegion.name = "اختار المنطقة"
+                                defaultRegion.arName = "اختار المنطقة"
                             }else{
-                                defaultRegion.name = "Select Region"
+                                defaultRegion.enName = "Select Region"
                             }
                             
                             self.regionList.append(defaultRegion)
@@ -146,8 +172,11 @@ class LocationViewController: UIViewController ,MapDelegate{
                             if let id = item["id"] as? Int {
                                 region.id = id
                             }
-                            if let name = item["name"] as? String{
-                                region.name = name
+                            if let name = item["name_en"] as? String{
+                                region.enName = name
+                            }
+                            if let arName = item["name_ar"] as? String{
+                                region.arName = arName
                             }
                             if let fees = item["fees"] as? Double{
                                 region.deliveryfees = fees
@@ -156,11 +185,38 @@ class LocationViewController: UIViewController ,MapDelegate{
                         }
                         self.regionPickerView.dataSource = self
                         self.regionPickerView.delegate = self
+                        
+                        if let data = UserDefaults.standard.data(forKey: "person"){
+                            let person = NSKeyedUnarchiver.unarchiveObject(with: data) as? Person
+                             let lang = UserDefaults.standard.value(forKey: "lang") as! String
+                            let region = Int((person?.regoin)!)
+                            
+                            for item in self.regionList{
+                                if item.id! == region{
+                                    if lang == "ar" {
+                                        
+                                        self.defaultRegion.text = "المنطقة: " + (item.arName)!
+                                    }else{
+                                        
+                                        self.defaultRegion.text = "Region: " + (item.enName)!
+                                    }
+                                }
+                            }
+                        }
+                       
                     }
                 case .failure(let error):
                     print(error)
                     
+                   
+                    
+                    
                     let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "retry", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
+                        print("Handle Ok logic here")
+                        self.getRegion()
+                    }))
+                    
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                     
@@ -289,12 +345,13 @@ class LocationViewController: UIViewController ,MapDelegate{
                     cartData?.region = (person?.regoin)!
                     cartData?.beside = (person?.besides)!
                     for item in regionList {
-                        if item.name  == cartData?.region! {
+                        if item.id  == Int((cartData?.region!)!) {
                             cartData?.deliveryfees = item.deliveryfees!
                         }
                     }
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "ConfirmedOrderViewController") as! ConfirmedOrderViewController
                     vc.cartData = cartData
+                    vc.comparedString = comparedString
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             }
@@ -303,13 +360,14 @@ class LocationViewController: UIViewController ,MapDelegate{
                 if valid == true{
                cartData?.address  = address!
                 cartData?.flatNumber = flatNumberTxt.text!
-              cartData?.region = regionList[regionSelected].name!
+              cartData?.region = "\(regionList[regionSelected].id!)"
                     cartData?.deliveryfees = regionList[regionSelected].deliveryfees!
                 cartData?.longitude = "\(long)"
                  cartData?.latitude =  "\(lat)"
                 cartData?.beside = landscapeTxt.text!
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "ConfirmedOrderViewController") as! ConfirmedOrderViewController
                     vc.cartData = cartData
+                    vc.comparedString = comparedString
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             }
@@ -351,7 +409,12 @@ extension LocationViewController: UIPickerViewDelegate,UIPickerViewDataSource{
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        return regionList[row].name
+        let lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar"{
+            return regionList[row].arName
+        }else{
+            return regionList[row].enName
+        }
         
         
         
@@ -368,8 +431,40 @@ extension LocationViewController: UIPickerViewDelegate,UIPickerViewDataSource{
             
         }
         
-        regionBtn.setTitle(regionList[row].name, for: .normal)
+        let lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar"{
+            regionBtn.setTitle(regionList[row].arName, for: .normal)
+        }else{
+            regionBtn.setTitle(regionList[row].enName, for: .normal)
+        }
         
+        
+    }
+}
+extension UIViewController{
+    func networkFail (){
+        let  lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar" {
+            let alert = UIAlertController(title: "", message:"خطأ في الشبكة" , preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    func networkNotExist(){
+        let  lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar" {
+            let alert = UIAlertController(title: "تحذير", message: "لا توجد شبكة", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            let alert = UIAlertController(title: "Warning", message: "No internet connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         
     }
 }

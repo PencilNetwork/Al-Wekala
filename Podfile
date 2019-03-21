@@ -16,6 +16,7 @@ pod 'GoogleSignIn'
  pod 'FBSDKLoginKit'
   pod 'FBSDKCoreKit'
   pod 'Bolts'
+pod 'IQKeyboardManagerSwift'
 pod 'SwiftyStarRatingView'
   target 'ALWekalaTests' do
     inherit! :search_paths

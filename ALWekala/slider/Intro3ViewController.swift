@@ -10,9 +10,10 @@ import UIKit
 
 class Intro3ViewController: UIViewController {
 
+    @IBOutlet var contentView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        contentView.semanticContentAttribute = .forceLeftToRight
         // Do any additional setup after loading the view.
     }
 

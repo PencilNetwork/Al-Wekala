@@ -33,11 +33,20 @@ class SignUpViewController: UIViewController,MapDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
          getRegion()
+        txtStyle(txtfield:nameTxt)
+        txtStyle(txtfield:numberTxt)
+        txtStyle(txtfield:alexandria)
+        txtStyle(txtfield:flatNumberTxt)
+        txtStyle(txtfield:landscapetxt)
+        regionBtn.layer.cornerRadius = 25
+        regionBtn.clipsToBounds = true
+        regionBtn.layer.borderWidth = 1
+        regionBtn.layer.borderColor = UIColor(red:201/255, green: 201/255, blue: 201/255, alpha: 1).cgColor
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         hideKeyboardWhenTappedAround()
-        confirmBtn.layer.cornerRadius = 10
-        setLocationBtn.layer.cornerRadius = 10
+        confirmBtn.layer.cornerRadius = 20
+        setLocationBtn.layer.cornerRadius = 25
         landscapetxt.delegate = self
         flatNumberTxt.delegate = self
         numberTxt.delegate = self
@@ -59,7 +68,17 @@ class SignUpViewController: UIViewController,MapDelegate {
             alexandria.textAlignment = .right
             regionBtn.contentHorizontalAlignment = .right
             flatNumberTxt.textAlignment = .right
-            landscapetxt.textAlignment = .right 
+            landscapetxt.textAlignment = .right
+            addressLBL.textAlignment = .right
+        }else{
+            contentView.semanticContentAttribute = .forceLeftToRight
+            nameTxt.textAlignment = .left
+            numberTxt.textAlignment = .left
+            alexandria.textAlignment = .left
+            regionBtn.contentHorizontalAlignment = .left
+            flatNumberTxt.textAlignment = .left
+            landscapetxt.textAlignment = .left
+            addressLBL.textAlignment = .left
         }
         NotificationCenter.default.addObserver(self, selector: #selector(SignUpViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SignUpViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -74,7 +93,7 @@ class SignUpViewController: UIViewController,MapDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    //MARK:IBaction
 
     @IBAction func regionBtnDone(_ sender: Any) {
         regionPickerView.isHidden = true
@@ -108,6 +127,13 @@ class SignUpViewController: UIViewController,MapDelegate {
         self.navigationController?.pushViewController(viewController, animated: false)
     }
     //MARK:Function
+    func txtStyle(txtfield:UITextField){
+        txtfield.layer.cornerRadius = 25
+        txtfield.clipsToBounds = true
+        txtfield.layer.borderWidth = 1
+        txtfield.layer.borderColor = UIColor(red:201/255, green: 201/255, blue: 201/255, alpha: 1).cgColor
+        
+    }
     @objc func textFieldDidChange(textField: UITextField){
         textField.backgroundColor = UIColor.white
         
@@ -141,6 +167,22 @@ class SignUpViewController: UIViewController,MapDelegate {
         if nameTxt.text == "" {
             validFlag = false
             nameTxt.backgroundColor = .red
+        }else{
+            
+            let name = nameTxt.text!
+            if name.count < 3{
+                validFlag = false
+                if lang == "ar"
+                {
+                    let alert = UIAlertController(title: "", message:"يجب أن يكون الاسم 3 أحرف على الأقل", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }else{
+                    let alert = UIAlertController(title: "alert", message: "Name should be at least 3 character", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
         }
         if numberTxt.text == "" {
             validFlag = false
@@ -150,11 +192,11 @@ class SignUpViewController: UIViewController,MapDelegate {
                 validFlag = false
                 if lang == "ar"
                 {
-                    let alert = UIAlertController(title: "", message:"رقم الجوال يجب أن لا يقل عن 11 رقم", preferredStyle: UIAlertControllerStyle.alert)
+                    let alert = UIAlertController(title: "", message:"رقم الجوال غير صالح", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }else{
-                    let alert = UIAlertController(title: "alert", message: "mobile number should not less than 11 number", preferredStyle: UIAlertControllerStyle.alert)
+                    let alert = UIAlertController(title: "alert", message: "Invalid mobile number", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }
@@ -207,11 +249,15 @@ class SignUpViewController: UIViewController,MapDelegate {
         self.addressLBL.text = self.address
     }
     func getRegion(){
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         let url = Constant.baseUrl + Constant.getRegion
         print(url)
         Alamofire.request(url, method:.get, parameters: nil,encoding: JSONEncoding.default, headers:nil)
             .responseJSON { response in
                 print(response)
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
                 switch response.result {
                 case .success:
                     if let datares = response.result.value as? [[String:Any]]{
@@ -220,9 +266,9 @@ class SignUpViewController: UIViewController,MapDelegate {
                             defaultRegion.id = -1
                             let lang = UserDefaults.standard.value(forKey: "lang") as! String
                             if lang == "ar" {
-                                defaultRegion.name = "اختار المنطقة"
+                                defaultRegion.arName = "اختار المنطقة"
                             }else{
-                                defaultRegion.name = "Select Region"
+                                defaultRegion.enName = "Select Region"
                             }
                             
                             self.regionList.append(defaultRegion)
@@ -232,8 +278,11 @@ class SignUpViewController: UIViewController,MapDelegate {
                             if let id = item["id"] as? Int {
                                 region.id = id
                             }
-                            if let name = item["name"] as? String{
-                                region.name = name
+                            if let name = item["name_en"] as? String{
+                                region.enName = name
+                            }
+                            if let arName = item["name_ar"] as? String{
+                                region.arName = arName
                             }
                             self.regionList.append(region)
                         }
@@ -266,7 +315,7 @@ class SignUpViewController: UIViewController,MapDelegate {
         parameter["langitude"] = self.long as  AnyObject?
         parameter["latitude"] = self.lat as  AnyObject?
         parameter["city"] = "Alexandria" as  AnyObject?
-        parameter["regoin"] = regionList[regionSelected].name  as  AnyObject?
+        parameter["regoin"] = "\(regionList[regionSelected].id!)"  as  AnyObject?
         parameter["besides"] = landscapetxt.text!  as  AnyObject?
         parameter["language"] = lang as  AnyObject?
         let url = Constant.baseUrl + Constant.signupUrl
@@ -345,8 +394,13 @@ extension SignUpViewController: UIPickerViewDelegate,UIPickerViewDataSource{
         
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar"{
+            return regionList[row].arName
+        }else{
+            return regionList[row].enName
+        }
         
-        return regionList[row].name
         
         
         
@@ -362,8 +416,13 @@ extension SignUpViewController: UIPickerViewDelegate,UIPickerViewDataSource{
             regionSelected = row
            
         }
+        let lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar"{
+            regionBtn.setTitle(regionList[row].arName, for: .normal)
+        }else{
+            regionBtn.setTitle(regionList[row].enName, for: .normal)
+        }
         
-        regionBtn.setTitle(regionList[row].name, for: .normal)
         
         
     }

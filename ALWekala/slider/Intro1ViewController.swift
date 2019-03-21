@@ -9,13 +9,15 @@
 import UIKit
 
 class Intro1ViewController: UIViewController {
-var pageViewController: RootViewController!
+    
+    @IBOutlet var contentView: UIView!
+    var pageViewController: RootViewController!
     lazy var orderdViewControllers:[UIViewController] = {
         return [self.newVC(viewContoller: "Intro1ViewController"),self.newVC(viewContoller: "Intro2ViewController"),self.newVC(viewContoller: "Intro3ViewController")]
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        contentView.semanticContentAttribute = .forceLeftToRight
          self.pageViewController = self.storyboard?.instantiateViewController(withIdentifier: "RootViewController") as! RootViewController
     }
 

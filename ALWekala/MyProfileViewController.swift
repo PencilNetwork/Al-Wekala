@@ -26,9 +26,9 @@ class MyProfileViewController: UIViewController ,MapDelegate{
     @IBOutlet weak var numberTxt: UITextField!
     @IBOutlet weak var nameTxt: UITextField!
     
-    @IBOutlet weak var flatNumber: UILabel!
+   
     
-    @IBOutlet weak var landscape: UILabel!
+    
     var regionList:[RegionBean] = []
     var regionSelected = -1
     var lat = 0.0
@@ -40,6 +40,8 @@ class MyProfileViewController: UIViewController ,MapDelegate{
       let lang = UserDefaults.standard.value(forKey: "lang") as! String
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+     
         activityIndicator.isHidden = true
         activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         hideKeyboardWhenTappedAround()
@@ -59,7 +61,17 @@ class MyProfileViewController: UIViewController ,MapDelegate{
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
+        txtStyle(txtfield:numberTxt)
+        txtStyle(txtfield:flatNumberTxt)
+        txtStyle(txtfield:nameTxt)
+        txtStyle(txtfield:landscapetxt)
+         txtStyle(txtfield:alexandria)
+        regionBtn.layer.cornerRadius = 25
+        regionBtn.clipsToBounds = true
+        regionBtn.layer.borderWidth = 1
+        regionBtn.layer.borderColor = UIColor(red:201/255, green: 201/255, blue: 201/255, alpha: 1).cgColor
+        setLocationBtn.layer.cornerRadius = 25
+        confirmBtn.layer.cornerRadius = 25 
     }
     func arabicLang(){
         nameTxt.placeholder = "name".localized(lang: "ar")
@@ -77,8 +89,16 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         regionBtn.contentHorizontalAlignment = .right
         flatNumberTxt.textAlignment = .right
         landscapetxt.textAlignment = .right
-        flatNumber.text = "flatNumber".localized(lang: "ar")
-        landscape.text = "landscape".localized(lang: "ar")
+        addressLBL.textAlignment = .right
+        regionPickerView.delegate = self
+        regionPickerView.dataSource = self
+    }
+    func txtStyle(txtfield:UITextField){
+        txtfield.layer.cornerRadius = 25
+        txtfield.clipsToBounds = true
+        txtfield.layer.borderWidth = 1
+        txtfield.layer.borderColor = UIColor(red:201/255, green: 201/255, blue: 201/255, alpha: 1).cgColor
+        
     }
     func englishLang(){
         nameTxt.placeholder = "name"
@@ -96,8 +116,10 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         regionBtn.contentHorizontalAlignment = .left
         flatNumberTxt.textAlignment = .left
         landscapetxt.textAlignment = .left
-        flatNumber.text = "Flat Number"
-        landscape.text = "landscape"
+        addressLBL.textAlignment = .left
+        
+        regionPickerView.delegate = self
+        regionPickerView.dataSource = self
     
     }
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -145,7 +167,7 @@ class MyProfileViewController: UIViewController ,MapDelegate{
             
             nameTxt.text = person?.name
             numberTxt.text = person?.phone
-            regionBtn.setTitle(person?.regoin, for: .normal)
+           
             flatNumberTxt.text = person?.flat_number
             landscapetxt.text = person?.besides
             lat = Double((person?.latitude)!)!
@@ -264,7 +286,7 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         if regionSelected == -1 {
              parameter["regoin"] = (person?.regoin)!  as  AnyObject?
         }else{
-             parameter["regoin"] = regionList[regionSelected].name!  as  AnyObject?
+             parameter["regoin"] = "\(regionList[regionSelected].id!)"  as  AnyObject?
         }
        
         parameter["besides"] = landscapetxt.text!  as  AnyObject?
@@ -294,7 +316,7 @@ class MyProfileViewController: UIViewController ,MapDelegate{
                                 if self.regionSelected == -1 {
                                    region = (person?.regoin)!
                                 }else{
-                                    region = self.regionList[self.regionSelected].name!
+                                    region = "\(self.regionList[self.regionSelected].id!)"
                                 }
                                  let data = UserDefaults.standard.data(forKey: "person")
                                 let person = NSKeyedUnarchiver.unarchiveObject(with: data!) as? Person
@@ -323,9 +345,7 @@ class MyProfileViewController: UIViewController ,MapDelegate{
                 case .failure(let error):
                     print(error)
                     
-                    let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                     self.networkFail()
                     
                 }
         }
@@ -343,6 +363,22 @@ class MyProfileViewController: UIViewController ,MapDelegate{
         if nameTxt.text == "" {
             validFlag = false
             nameTxt.backgroundColor = .red
+        }else{
+            
+            let name = nameTxt.text!
+            if name.count < 3{
+                 validFlag = false
+                if lang == "ar"
+                {
+                    let alert = UIAlertController(title: "", message:"يجب أن يكون الاسم 3 أحرف على الأقل", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }else{
+                    let alert = UIAlertController(title: "alert", message: "Name should be at least 3 character", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
         }
         if numberTxt.text == "" {
             validFlag = false
@@ -352,11 +388,11 @@ class MyProfileViewController: UIViewController ,MapDelegate{
                 validFlag = false
                 if lang == "ar"
                 {
-                    let alert = UIAlertController(title: "", message:"رقم الجوال يجب أن لا يقل عن 11 رقم", preferredStyle: UIAlertControllerStyle.alert)
+                    let alert = UIAlertController(title: "", message:"رقم الجوال غير صالح", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }else{
-                    let alert = UIAlertController(title: "alert", message: "mobile number should not less than 11 number", preferredStyle: UIAlertControllerStyle.alert)
+                    let alert = UIAlertController(title: "alert", message: "Invalid mobile number", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }
@@ -418,12 +454,11 @@ class MyProfileViewController: UIViewController ,MapDelegate{
                         if datares.count > 0 {
                             let defaultRegion = RegionBean()
                             defaultRegion.id = -1
-                            let lang = UserDefaults.standard.value(forKey: "lang") as! String
-                            if lang == "ar" {
-                                defaultRegion.name = "اختار المنطقة"
-                            }else{
-                                defaultRegion.name = "Select Region"
-                            }
+                          
+                                defaultRegion.arName = "اختار المنطقة"
+                           
+                                defaultRegion.enName = "Select Region"
+                            
                             
                             self.regionList.append(defaultRegion)
                         }
@@ -432,18 +467,42 @@ class MyProfileViewController: UIViewController ,MapDelegate{
                             if let id = item["id"] as? Int {
                                 region.id = id
                             }
-                            if let name = item["name"] as? String{
-                                region.name = name
+                            if let name = item["name_en"] as? String{
+                                region.enName = name
+                            }
+                            if let arName = item["name_ar"] as? String{
+                                region.arName = arName
                             }
                             self.regionList.append(region)
                         }
                         self.regionPickerView.dataSource = self
                         self.regionPickerView.delegate = self
+                        if let data = UserDefaults.standard.data(forKey: "person"){
+                            let person = NSKeyedUnarchiver.unarchiveObject(with: data) as? Person
+                            let lang = UserDefaults.standard.value(forKey: "lang") as! String
+                            let region = Int((person?.regoin)!)
+                            
+                            for item in self.regionList{
+                                if item.id! == region{
+                                    if lang == "ar" {
+                                        self.regionBtn.setTitle((item.arName)!, for: .normal)
+                                      
+                                    }else{
+                                      self.regionBtn.setTitle((item.enName)!, for: .normal)
+                                    }
+                                }
+                            }
+                        }
                     }
                 case .failure(let error):
                     print(error)
                     
                     let alert = UIAlertController(title: "", message: "Network fail" , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "retry", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction!) in
+                        print("Handle Ok logic here")
+                        self.getRegion()
+                    }))
+                    
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                     
@@ -475,9 +534,12 @@ extension MyProfileViewController: UIPickerViewDelegate,UIPickerViewDataSource{
         
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        return regionList[row].name
-        
+        let lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar"{
+        return regionList[row].arName
+        }else{
+            return regionList[row].enName
+        }
         
         
     }
@@ -492,8 +554,13 @@ extension MyProfileViewController: UIPickerViewDelegate,UIPickerViewDataSource{
             regionSelected = row
             
         }
-       
-        regionBtn.setTitle(regionList[row].name, for: .normal)
+        let lang = UserDefaults.standard.value(forKey: "lang") as! String
+        if lang == "ar"{
+            regionBtn.setTitle(regionList[row].arName, for: .normal)
+        }else{
+            regionBtn.setTitle(regionList[row].enName, for: .normal)
+        }
+        
         
         
     }

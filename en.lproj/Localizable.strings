@@ -5,15 +5,17 @@
   Created by Mac on 10/21/18.
   Copyright © 2018 pencil. All rights reserved.
 */
-vegetable = "Vegetables";
-fruits = "Fruits";
-dayDelivery = "Day Delivery";
-nightDelivery = "Night Delivery";
+vegetable = "VEGETABLES";
+fruits = "FRUITS";
+dayDelivery = "DAY DELIVERY";
+nightDelivery = "NIGHT DELIVERY";
 addtoCart = "Add to cart" ;
 added = "Added";
 marketPrice = "market Price:";
-wekalaPrice = "Wekala price:";
+wekalaPrice = "Al-Wekala price:";
 timeMorning = "12pm:03pm";
 timenight = "06pm:09pm";
 yourCart = "Your Cart" ;
-checkout = "CheckOut" ;
+checkout = "Check Out" ;
+market = "MARKET " ;
+wekala = "AL-Wekala";

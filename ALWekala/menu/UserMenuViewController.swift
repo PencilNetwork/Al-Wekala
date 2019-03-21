@@ -10,12 +10,12 @@ import UIKit
 
 
 class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
-  var menuList = ["Home","MYProfile","MyOrders","LOGOUT"]
+  var menuList = ["Home","MY Profile","My Orders","Log Out"]
     var menuArabicList = ["الصفحة الرئيسية", "ملفي","طلباتي","الخروج"]
     @IBOutlet var containerView: UIView!
     
-    @IBOutlet weak var menuLBL: UILabel!
-    @IBOutlet weak var viewTableTopConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var tableTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var menuTableView: UITableView!
     var menuDel:menuDelegate?
     override func viewDidLoad() {
@@ -23,21 +23,19 @@ class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableVie
          menuTableView.delegate = self
         menuTableView.dataSource = self
         menuTableView.tableFooterView = UIView()
-        menuTableView.backgroundColor = UIColor.black
+     //   menuTableView.backgroundColor = UIColor.black
         if UIDevice.isIphoneX { // it is iphone x or iphonesx or xs max
-            viewTableTopConstraint.constant = 24
+      //      tableTopConstraint.constant = 24
         }
         let lang = UserDefaults.standard.value(forKey: "lang") as! String
         if lang == "ar" {
              containerView.semanticContentAttribute = .forceRightToLeft
             menuTableView.semanticContentAttribute = .forceRightToLeft
-            menuLBL.text = "القائمة"
-            menuLBL.textAlignment = .right
+           
         }else{
             containerView.semanticContentAttribute = .forceLeftToRight
             menuTableView.semanticContentAttribute = .forceLeftToRight
-            menuLBL.text = "Menu"
-            menuLBL.textAlignment = .left
+           
         }
         // Do any additional setup after loading the view.
          NotificationCenter.default.addObserver(self, selector: #selector(changeMenuLang(_:)), name: NSNotification.Name(rawValue: "changeMenuLanguage"), object: nil)
@@ -53,13 +51,11 @@ class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableVie
     if lang == "ar" {
         containerView.semanticContentAttribute = .forceRightToLeft
         menuTableView.semanticContentAttribute = .forceRightToLeft
-        menuLBL.text = "القائمة"
-        menuLBL.textAlignment = .right
+      
     }else{
        containerView.semanticContentAttribute = .forceLeftToRight
         menuTableView.semanticContentAttribute = .forceLeftToRight
-        menuLBL.text = "Menu"
-        menuLBL.textAlignment = .left
+       
     }
     menuTableView.reloadData()
     }
@@ -79,7 +75,7 @@ class UserMenuViewController: UIViewController ,UITableViewDataSource,UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuUserTableViewCell", for: indexPath) as! MenuTableViewCell
        
-        cell.backgroundColor = UIColor.black
+      
         let lang = UserDefaults.standard.value(forKey: "lang") as! String
         if lang == "ar" {
             cell.menuItem.textAlignment = .right
